@@ -14,6 +14,8 @@ interface WellProps {
 const Well = styled.div<WellProps>`
   width: 100px;
   height: 100px;
+  margin: ${p => p.theme.sizing.large};
+
   background-color: ${p => p.bg};
   border-radius: 8px;
   box-shadow: inset 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
