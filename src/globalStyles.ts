@@ -10,7 +10,7 @@ export default createGlobalStyle`
   }
 
   body {
-    font-family: 'Montserrat Alternates', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     font-size: ${props => props.theme.sizing.medium};
     background: ${props => props.theme.colors.secondary};
     color: ${props => props.theme.colors.primary};
