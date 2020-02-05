@@ -3,7 +3,7 @@ import styled, { ThemeProvider } from 'styled-components';
 import theme from 'theme';
 import GlobalStyles from 'globalStyles';
 
-import Octicon, { MarkGithub } from '@githubprimer/octicons-react';
+import Octicon, { MarkGithub } from '@primer/octicons-react';
 
 import { Header } from 'components/header';
 import { Picker } from 'components/picker';
