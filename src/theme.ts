@@ -9,6 +9,13 @@ const theme = {
     medium: '1rem',
     large: '2.5rem',
   },
+  fonts: {
+    smallest: '0.625rem',
+    small: '0.8rem',
+    medium: '1rem',
+    larger: '1.3rem',
+    largest: '1.8rem',
+  },
 };
 
 export type ITheme = typeof theme;
