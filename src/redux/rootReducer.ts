@@ -1,6 +1,10 @@
 import { combineReducers } from '@reduxjs/toolkit';
 
-const rootReducer = combineReducers({});
+import paletteReducer from 'redux/paletteSlice';
+
+const rootReducer = combineReducers({
+  palette: paletteReducer,
+});
 
 export type RootState = ReturnType<typeof rootReducer>;
 
