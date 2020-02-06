@@ -6,6 +6,7 @@ const paletteSlice = createSlice({
   reducers: {
     changeBaseColor(state, action: PayloadAction<string>) {
       const color = action.payload;
+      // This is wrapped in Immer's produce by RTK
       // eslint-disable-next-line no-param-reassign
       state.baseColor = color;
     },
