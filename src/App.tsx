@@ -25,7 +25,7 @@ const Pane = styled.section`
 const Colors = styled(Pane)``;
 
 const Settings = styled(Pane)`
-  background: ${p => p.theme.colors.primary};
+  background: ${p => p.theme.colors.tertiary};
   display: flex;
   flex-direction: column;
 `;
