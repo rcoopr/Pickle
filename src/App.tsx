@@ -7,7 +7,8 @@ import Octicon, { MarkGithub } from '@primer/octicons-react';
 
 import { Header } from 'components/header';
 import { Palette } from 'components/palette';
-import { PickerCard } from 'components/pickerCard';
+import { Card } from 'components/card';
+import { Picker } from 'components/picker';
 
 const Container = styled.main`
   display: flex;
@@ -67,7 +68,9 @@ const App = () => (
     <Container data-testid="container">
       <Colors>
         <Header />
-        <PickerCard />
+        <Card>
+          <Picker />
+        </Card>
       </Colors>
       <Settings />
       <Footer>

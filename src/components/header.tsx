@@ -16,6 +16,7 @@ const Description = styled.h2`
   font-weight: 700;
   font-size: ${p => p.theme.fonts.small};
 `;
+
 export const Header = () => (
   <Container>
     <Title>Color Picker</Title>

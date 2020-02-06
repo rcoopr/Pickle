@@ -21,6 +21,7 @@ const Swatch = styled.div<{ bg: string }>`
   border-radius: 4px;
   background: ${p => p.bg};
   box-shadow: inset 0px 1px 2px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
 `;
 
 const paletteArray = [...Array(9).fill(null)];
