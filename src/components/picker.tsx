@@ -1,10 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { connect } from 'react-redux';
-import palette, { changeBaseColor } from 'redux/paletteSlice';
-
-const mapDispatch = { changeBaseColor };
+import { useSelector, useDispatch } from 'react-redux';
+import { changeBaseColor } from 'redux/paletteSlice';
+import { RootState } from 'redux/rootReducer';
 
 const Container = styled.section`
   display: flex;
@@ -30,13 +29,11 @@ const Details = styled.p`
   font-size: ${p => p.theme.sizing.small};
 `;
 
-const handleClick = () => changeBaseColor('#fff');
+export const Picker = () => {
+  const baseColor = useSelector((state: RootState) => state.palette.baseColor);
+  const dispatch = useDispatch();
+  const handleClick = () => dispatch(changeBaseColor('#ffc900'));
 
-const Picker = () => {
-  const { baseColor } = palette(undefined, {
-    type: changeBaseColor.type,
-    payload: '#f7cf7d',
-  });
   return (
     <Container>
       <Well bg={baseColor} onClick={() => handleClick()} />
@@ -44,5 +41,3 @@ const Picker = () => {
     </Container>
   );
 };
-
-export default connect(null, mapDispatch)(Picker);

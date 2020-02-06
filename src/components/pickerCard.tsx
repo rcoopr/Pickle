@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import Picker from 'components/picker';
+import { Picker } from 'components/picker';
 
 const Container = styled.div`
   display: flex;
