@@ -45,9 +45,11 @@ export const ChartArea = ({ data, width, height }: IChartArea) => {
       <SVGCanvas width={width} height={height}>
         {data.map(([h, s, l]) => {
           const fill = `hsl(${h}, ${s}%, ${l}%)`;
-          const x = (width * l) / 100;
-          const y = height + 25 - (height * s) / 100;
+          const unscaledX = (width * l) / 100;
+          const unscaledY = (height * s) / 100;
 
+          const x = (unscaledX * (width - 25)) / width;
+          const y = ((height + 25 - unscaledY) * (height - 25)) / height;
           return (
             <g>
               <circle cx={x} cy={y} r="10" fill="white" />
