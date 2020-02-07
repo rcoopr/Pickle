@@ -2,7 +2,7 @@ const theme = {
   colors: {
     primary: 'hsl(210, 96%, 19%)',
     secondary: 'hsl(210, 38%, 95%)',
-    tertiary: 'hsl(210, 38%, 76%)',
+    tertiary: 'hsl(212, 31%, 90%)',
     accent: 'hsl(194, 91%, 60%)',
   },
   sizing: {

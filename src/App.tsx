@@ -9,10 +9,11 @@ import { Header } from 'components/header';
 import { Palette } from 'components/palette';
 import { Card } from 'components/card';
 import { Picker } from 'components/picker';
+import { Graph } from 'components/graph';
 
 const Container = styled.main`
   display: flex;
-  min-height: calc(100vh - 140px);
+  min-height: 100vh;
   background: ${p => p.theme.colors.secondary};
 `;
 
@@ -25,8 +26,8 @@ const Pane = styled.section`
 
 const Colors = styled(Pane)``;
 
-const Settings = styled(Pane)`
-  background: ${p => p.theme.colors.tertiary};
+const Settings = styled.section`
+  /* background: ${p => p.theme.colors.tertiary}; */
   display: flex;
   flex-direction: column;
 `;
@@ -72,7 +73,9 @@ const App = () => (
           <Picker />
         </Card>
       </Colors>
-      <Settings />
+      <Settings>
+        <Graph />
+      </Settings>
       <Footer>
         <Palette />
         <Watermark>

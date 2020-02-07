@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import Color from 'color';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { changeBaseColor } from 'redux/paletteSlice';
 import { RootState } from 'redux/rootReducer';
+import { hslLabel } from 'utils/swatchColors';
 
 const Container = styled.section`
   display: flex;
@@ -41,20 +41,14 @@ export const Picker = () => {
   const dispatch = useDispatch();
   const handleClick = () => dispatch(changeBaseColor('#ffc900'));
 
-  const baseHSL = Color(baseColor)
-    .hsl()
-    .round()
-    .string();
-
-  const channels = ['H: ', 'S: ', 'L: '];
-  const values = baseHSL.slice(4, -1).split(',');
+  const labels = hslLabel(baseColor);
 
   return (
     <Container>
       <Well bg={baseColor} onClick={() => handleClick()} />
       <Label>
-        {channels.map((channel, i) => (
-          <li>{`${channel}${values[i]}`}</li>
+        {labels.map(label => (
+          <li>{label}</li>
         ))}
       </Label>
     </Container>
