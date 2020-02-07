@@ -4,7 +4,6 @@ import theme from 'theme';
 import GlobalStyles from 'globalStyles';
 
 import Octicon, { MarkGithub } from '@primer/octicons-react';
-
 import { Header } from 'components/header';
 import { Palette } from 'components/palette';
 import { Card } from 'components/card';
