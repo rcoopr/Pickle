@@ -35,11 +35,13 @@ const Settings = styled.section`
 const Footer = styled.footer`
   background: ${p => p.theme.colors.secondary};
   position: fixed;
-  bottom: 0;
+  bottom: 53px;
   left: 0;
   right: 0;
   box-shadow: 0 -0.9px 2.2px rgba(0, 0, 0, 0.017), 0 -2.3px 5.7px rgba(0, 0, 0, 0.025),
-    0 -5.3px 13.5px rgba(0, 0, 0, 0.033), 0 -23px 54px rgba(0, 0, 0, 0.05);
+    0 -5.3px 13.5px rgba(0, 0, 0, 0.033), 0 -23px 54px rgba(0, 0, 0, 0.05),
+    0 0.9px 2.2px rgba(0, 0, 0, 0.017), 0 2.3px 5.7px rgba(0, 0, 0, 0.025),
+    0 5.3px 13.5px rgba(0, 0, 0, 0.033), 0 23px 54px rgba(0, 0, 0, 0.05);
 `;
 
 const Watermark = styled.div`
@@ -53,6 +55,10 @@ const Watermark = styled.div`
   & > a {
     color: inherit;
     text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
 `;
 
