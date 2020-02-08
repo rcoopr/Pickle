@@ -23,7 +23,7 @@ const Pane = styled.section`
   justify-content: center;
 `;
 
-const Colors = styled(Pane)``;
+const PickerPane = styled(Pane)``;
 
 const Settings = styled.section`
   /* background: ${p => p.theme.colors.tertiary}; */
@@ -72,12 +72,12 @@ const App = () => (
   <ThemeProvider theme={theme}>
     <GlobalStyles />
     <Container data-testid="container">
-      <Colors>
+      <PickerPane>
         <Header />
         <Card>
           <Picker />
         </Card>
-      </Colors>
+      </PickerPane>
       <Settings>
         <Graph />
       </Settings>
