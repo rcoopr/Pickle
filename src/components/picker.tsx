@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
+import { SketchPicker } from 'react-color';
 import { useSelector, useDispatch } from 'react-redux';
 import { changeBaseColor } from 'redux/paletteSlice';
 import { RootState } from 'redux/rootReducer';
-import { hslLabel } from 'utils/swatchColors';
 
 const Container = styled.section`
   display: flex;
@@ -12,45 +12,58 @@ const Container = styled.section`
   justify-content: center;
 `;
 
-interface WellProps {
-  bg: string;
-}
+// interface WellProps {
+//   bg: string;
+// }
 
-const Well = styled.div<WellProps>`
-  width: 100px;
-  height: 100px;
-  margin: ${p => p.theme.sizing.large};
+// const Well = styled.div<WellProps>`
+//   width: 100px;
+//   height: 100px;
+//   margin: ${p => p.theme.sizing.large};
 
-  background-color: ${p => p.bg};
-  border-radius: 8px;
-  box-shadow: inset 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
-`;
+//   background-color: ${p => p.bg};
+//   border-radius: 8px;
+//   box-shadow: inset 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
+// `;
 
-const Label = styled.ul`
-  font-size: ${p => p.theme.sizing.small};
-  margin: ${p => p.theme.sizing.large};
-  margin-left: 0;
-  width: 5em;
-  line-height: ${p => p.theme.fonts.larger};
-  font-size: ${p => p.theme.fonts.small};
-  list-style: none;
-`;
+// const Label = styled.ul`
+//   font-size: ${p => p.theme.sizing.small};
+//   margin: ${p => p.theme.sizing.large};
+//   margin-left: 0;
+//   width: 5em;
+//   line-height: ${p => p.theme.fonts.larger};
+//   font-size: ${p => p.theme.fonts.small};
+//   list-style: none;
+// `;
 
 export const Picker = () => {
+  // Default
+  const [pickerColor, setPickerColor] = useState('#1fc6ea');
   const baseColor = useSelector((state: RootState) => state.palette.baseColor);
   const dispatch = useDispatch();
-  const handleClick = () => dispatch(changeBaseColor('#ffc900'));
 
-  const labels = hslLabel(baseColor);
+  useEffect(() => {
+    setPickerColor(baseColor);
+  }, [baseColor]);
+
+  const updateState = (color: any) => dispatch(changeBaseColor(color.hex));
+  const updatePicker = (color: any) => setPickerColor(color.hex);
+  // const labels = hslLabel(baseColor);
 
   return (
     <Container>
-      <Well bg={baseColor} onClick={() => handleClick()} />
+      {/* <Well bg={baseColor} onClick={() => handleClick()} />
       <Label>
         {labels.map(label => (
           <li>{label}</li>
         ))}
-      </Label>
+      </Label> */}
+      <SketchPicker
+        color={pickerColor}
+        onChange={updatePicker}
+        onChangeComplete={updateState}
+        disableAlpha
+      />
     </Container>
   );
 };
