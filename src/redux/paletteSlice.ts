@@ -3,7 +3,7 @@ import Color from 'color';
 
 const paletteSlice = createSlice({
   name: 'palette',
-  initialState: { baseColor: Color('#1fc6ea') },
+  initialState: { baseColor: Color('hsl(191, 83%, 52%)') },
   reducers: {
     changeBaseColor(state, action: PayloadAction<Color>) {
       const color = action.payload;
