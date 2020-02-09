@@ -93,22 +93,31 @@ const HueSlider = styled(Slider)`
   );
 `;
 
-const SaturationSlider = styled(Slider)<ISliderProps>`
-  background-image: linear-gradient(
-    to right,
-    hsl(${p => p.hue}, 0%, ${p => p.lightness}%),
-    hsl(${p => p.hue}, 100%, ${p => p.lightness}%)
-  );
-`;
+// Old style, seems to cause too many classes being created by SC
+// const SaturationSlider = styled(Slider)<ISliderProps>`
+//   background-image: linear-gradient(
+//     to right,
+//     hsl(${p => p.hue}, 0%, ${p => p.lightness}%),
+//     hsl(${p => p.hue}, 100%, ${p => p.lightness}%)
+//   );
+// `;
 
-const LightnessSlider = styled(Slider)<ISliderProps>`
-  background-image: linear-gradient(
-    to right,
-    hsl(${p => p.hue}, ${p => p.saturation}%, 0%) 0%,
-    hsl(${p => p.hue}, ${p => p.saturation}%, 50%) 50%,
-    hsl(${p => p.hue}, ${p => p.saturation}%, 100%) 100%
-  );
-`;
+const SaturationSlider = styled(Slider).attrs<ISliderProps>(p => ({
+  style: {
+    backgroundImage: `linear-gradient(to right, hsl(${p.hue}, 0%, ${p.lightness}%), hsl(${p.hue}, 100%, ${p.lightness}%))`,
+  },
+}))<ISliderProps>``;
+
+const LightnessSlider = styled(Slider).attrs<ISliderProps>(p => ({
+  style: {
+    backgroundImage: `linear-gradient(
+      to right,
+      hsl(${p.hue}, ${p.saturation}%, 0%) 0%,
+      hsl(${p.hue}, ${p.saturation}%, 50%) 50%,
+      hsl(${p.hue}, ${p.saturation}%, 100%) 100%
+    )`,
+  },
+}))<ISliderProps>``;
 
 const EditableInput = styled.input`
   width: 4em;
@@ -166,14 +175,27 @@ export const Picker = () => {
   const baseColor = useSelector((state: RootState) => state.palette.baseColor);
   const dispatch = useDispatch();
 
-  const [localColor, setLocalColor] = useState(baseColor);
-  const handleLocalChange = (value: number, channel: string) => {
+  const [localColorString, setLocalColorString] = useState(baseColor);
+  const localColor = Color(localColorString);
+  const handleLocalChange = (val: number, channel: string) => {
     const prevColor = localColor.hsl().object();
     // eslint-disable-next-line prefer-const
     let newColor = { ...prevColor };
+    let value = Number.isNaN(val) ? 0 : val;
+    value = value < 0 ? 0 : value;
+    if (channel === 'h') {
+      value = value > 359 ? 359 : value;
+    } else {
+      value = value > 100 ? 100 : value;
+    }
+
     newColor[channel] = value;
-    setLocalColor(Color(newColor));
-    dispatch(changeBaseColor(Color(newColor)));
+
+    const hsl = Color(newColor)
+      .hsl()
+      .toString();
+    setLocalColorString(hsl);
+    dispatch(changeBaseColor(hsl));
   };
 
   return (
@@ -184,30 +206,45 @@ export const Picker = () => {
           styles={sliderStyles}
           xmax={359}
           x={localColor.hue()}
+          xstep={1}
           onChange={({ x }) => handleLocalChange(x, 'h')}
         />
-        <HueEditableInput type="text" value={localColor.hue()} />
+        <HueEditableInput
+          type="text"
+          value={localColor.hue()}
+          onChange={e => handleLocalChange(parseInt(e.target.value, 10), 'h')}
+        />
       </Hue>
       <Saturation>
         <SaturationSlider
           styles={sliderStyles}
           axis="x"
           x={localColor.saturationl()}
+          xstep={1}
           onChange={({ x }) => handleLocalChange(x, 's')}
           hue={localColor.hue()}
           lightness={localColor.lightness()}
         />
-        <SaturationEditableInput type="text" value={localColor.saturationl()} />
+        <SaturationEditableInput
+          type="text"
+          value={localColor.saturationl()}
+          onChange={e => handleLocalChange(parseInt(e.target.value, 10), 's')}
+        />
       </Saturation>
       <Lightness>
         <LightnessSlider
           styles={sliderStyles}
           x={localColor.lightness()}
+          xstep={1}
           onChange={({ x }) => handleLocalChange(x, 'l')}
           hue={localColor.hue()}
           saturation={localColor.saturationl()}
         />
-        <LightnessEditableInput type="text" value={localColor.lightness()} />
+        <LightnessEditableInput
+          type="text"
+          value={localColor.lightness()}
+          onChange={e => handleLocalChange(parseInt(e.target.value, 10), 'l')}
+        />
       </Lightness>
       <CopyButtons>
         <HexButton>Hex</HexButton>

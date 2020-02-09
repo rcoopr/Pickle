@@ -3,13 +3,16 @@ import Color from 'color';
 
 const paletteSlice = createSlice({
   name: 'palette',
-  initialState: { baseColor: Color('hsl(191, 83%, 52%)') },
+  initialState: { baseColor: 'hsl(191, 83%, 52%)' },
   reducers: {
-    changeBaseColor(state, action: PayloadAction<Color>) {
+    changeBaseColor(state, action: PayloadAction<string>) {
       const color = action.payload;
+      const hsl = Color(color)
+        .hsl()
+        .toString();
       // This is wrapped in Immer's produce by RTK
       // eslint-disable-next-line no-param-reassign
-      state.baseColor = Color(color);
+      state.baseColor = hsl;
     },
   },
 });
