@@ -6,8 +6,8 @@ import GlobalStyles from 'globalStyles';
 import Octicon, { MarkGithub } from '@primer/octicons-react';
 import { Header } from 'components/header';
 import { Palette } from 'components/palette';
+import { Settings } from 'components/settings';
 import { Picker } from 'components/picker';
-import { Graph } from 'components/graph';
 
 const Container = styled.main`
   display: flex;
@@ -24,12 +24,6 @@ const Pane = styled.section`
 
 const PickerPane = styled(Pane)`
   padding-bottom: 150px;
-`;
-
-const Settings = styled.section`
-  /* background: ${p => p.theme.colors.tertiary}; */
-  display: flex;
-  flex-direction: column;
 `;
 
 const Footer = styled.footer`
@@ -77,9 +71,7 @@ const App = () => (
         <Header />
         <Picker />
       </PickerPane>
-      <Settings>
-        <Graph />
-      </Settings>
+      <Settings />
       <Footer>
         <Palette />
         <Watermark>

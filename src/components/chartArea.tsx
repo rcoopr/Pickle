@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import { IGraphProps } from 'components/graph';
+
 const Canvas = styled.div`
   width: 300px;
   height: 200px;
@@ -38,18 +40,21 @@ interface IChartArea {
   height: number;
 }
 
-export const ChartArea = ({ data, width, height }: IChartArea) => {
+export const ChartArea = ({ data, xAxis, yAxis, width, height }: IGraphProps) => {
   return (
     <Canvas>
       <Grid width={width} height={height} />
       <SVGCanvas width={width} height={height}>
-        {data.map(([h, s, l]) => {
+        {data.map(color => {
+          const [h, s, l] = color;
           const fill = `hsl(${h}, ${s}%, ${l}%)`;
-          const unscaledX = (width * l) / 100;
-          const unscaledY = (height * s) / 100;
+          const maxVal = (channel: number) => (channel === 0 ? 360 : 100);
+
+          const unscaledX = (width * color[xAxis.channel]) / maxVal(xAxis.channel);
+          const unscaledY = (height * color[yAxis.channel]) / maxVal(yAxis.channel);
 
           const x = ((25 + unscaledX) * (width - 50)) / width;
-          const y = ((height + 25 - unscaledY) * (height - 25)) / height;
+          const y = ((height + 25 - unscaledY) * (height - 50)) / height;
           return (
             <g>
               <circle cx={x} cy={y} r="10" fill="white" />
