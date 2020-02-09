@@ -1,33 +1,16 @@
 import Color from 'color';
-// Called with base color
-// Each method returns 9 Swatch items in array
-
-// METHODS:
-// CSS color string
-// HSL Object
-
-export const hslLabel = (color: string) => {
-  const hsl = Color(color)
-    .hsl()
-    .round();
-  const label = [`H: ${hsl.hue()}`, `S: ${hsl.saturationl()}%`, `L: ${hsl.lightness()}%`];
-
-  return label;
-};
 
 export const swatchesCSS = (baseColor: Color) => {
   const emptyArray = [...Array(9).fill(null)];
-  const color = Color(baseColor);
-  const swatches = emptyArray.map((_, i) => color.lighten(0.8 - i * 0.2).string());
+  const swatches = emptyArray.map((_, i) => baseColor.lighten(0.8 - i * 0.2).string());
 
   return swatches;
 };
 
 export const swatchesHSL = (baseColor: Color) => {
   const emptyArray = [...Array(9).fill(null)];
-  const color = Color(baseColor);
   const swatches = emptyArray.map((_, i) =>
-    color
+    baseColor
       .lighten(0.8 - i * 0.2)
       .round()
       .hsl()
