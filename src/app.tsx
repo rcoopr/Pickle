@@ -6,7 +6,6 @@ import GlobalStyles from 'globalStyles';
 import Octicon, { MarkGithub } from '@primer/octicons-react';
 import { Header } from 'components/header';
 import { Palette } from 'components/palette';
-import { Card } from 'components/card';
 import { Picker } from 'components/picker';
 import { Graph } from 'components/graph';
 
@@ -23,7 +22,9 @@ const Pane = styled.section`
   justify-content: center;
 `;
 
-const PickerPane = styled(Pane)``;
+const PickerPane = styled(Pane)`
+  padding-bottom: 150px;
+`;
 
 const Settings = styled.section`
   /* background: ${p => p.theme.colors.tertiary}; */
@@ -74,9 +75,7 @@ const App = () => (
     <Container data-testid="container">
       <PickerPane>
         <Header />
-        <Card>
-          <Picker />
-        </Card>
+        <Picker />
       </PickerPane>
       <Settings>
         <Graph />

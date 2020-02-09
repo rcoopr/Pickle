@@ -48,7 +48,7 @@ export const ChartArea = ({ data, width, height }: IChartArea) => {
           const unscaledX = (width * l) / 100;
           const unscaledY = (height * s) / 100;
 
-          const x = (unscaledX * (width - 25)) / width;
+          const x = ((25 + unscaledX) * (width - 50)) / width;
           const y = ((height + 25 - unscaledY) * (height - 25)) / height;
           return (
             <g>
