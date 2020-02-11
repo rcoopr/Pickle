@@ -40,7 +40,7 @@ interface IChartArea {
   height: number;
 }
 
-export const ChartArea = ({ data, xAxis, yAxis, width, height }: IGraphProps) => {
+export const Chart = ({ data, xAxis, yAxis, width, height }: IGraphProps) => {
   return (
     <Canvas>
       <Grid width={width} height={height} />
@@ -53,8 +53,9 @@ export const ChartArea = ({ data, xAxis, yAxis, width, height }: IGraphProps) =>
           const unscaledX = (width * color[xAxis.channel]) / maxVal(xAxis.channel);
           const unscaledY = (height * color[yAxis.channel]) / maxVal(yAxis.channel);
 
-          const x = ((25 + unscaledX) * (width - 50)) / width;
-          const y = ((height + 25 - unscaledY) * (height - 50)) / height;
+          const padding = 20;
+          const x = ((padding + unscaledX) * (width - padding * 2)) / width;
+          const y = ((height + padding - unscaledY) * (height - padding * 2)) / height;
           return (
             <g>
               <circle cx={x} cy={y} r="10" fill="white" />
