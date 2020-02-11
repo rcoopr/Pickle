@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { changeBaseColorIfDiff } from 'redux/paletteSlice';
 import { RootState } from 'redux/rootReducer';
 import Color from 'color';
+// TODO: Remove color dep
 
 interface IColorRect {
   bg: string;
