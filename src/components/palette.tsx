@@ -1,10 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import { hslArrayToString } from 'utils/swatchColors';
 import { useSelector } from 'react-redux';
 import { RootState } from 'redux/rootReducer';
-
-import Color from 'color';
 
 const Container = styled.div`
   display: flex;
@@ -27,21 +26,15 @@ const Swatch = styled.div.attrs<{ bg: string }>(p => ({
   z-index: 1;
 `;
 
-const paletteArray = [...Array(9).fill(null)];
-
 export const Palette = () => {
-  const baseColor = useSelector((state: RootState) => state.palette.baseColor);
+  // const baseColor = useSelector((state: RootState) => state.palette.baseColor);
+  const swatches = useSelector((state: RootState) => state.palette.swatches);
+  const swatchesHSLString = hslArrayToString(swatches);
 
   return (
     <Container>
-      {paletteArray.map((_, i) => {
-        return (
-          <Swatch
-            bg={Color(baseColor)
-              .lighten(0.8 - i * 0.2)
-              .string()}
-          />
-        );
+      {swatchesHSLString.map(color => {
+        return <Swatch bg={color} />;
       })}
     </Container>
   );
