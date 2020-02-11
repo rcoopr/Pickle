@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import Slider from 'react-input-slider';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { changeBaseColor } from 'redux/paletteSlice';
+import { changeBaseColorIfDiff } from 'redux/paletteSlice';
 import { RootState } from 'redux/rootReducer';
 import Color from 'color';
 
@@ -195,7 +195,7 @@ export const Picker = () => {
       .hsl()
       .toString();
 
-    dispatch(changeBaseColor(hsl));
+    dispatch(changeBaseColorIfDiff(hsl));
   };
 
   return (
