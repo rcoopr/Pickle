@@ -1,6 +1,6 @@
 import { createSlice, Action, PayloadAction, ThunkAction } from '@reduxjs/toolkit';
 import Color from 'color';
-import { RootState } from './rootReducer';
+import { RootState } from 'redux/rootReducer';
 
 const paletteSlice = createSlice({
   name: 'palette',
@@ -14,6 +14,10 @@ const paletteSlice = createSlice({
       // This is wrapped in Immer's produce by RTK
       // eslint-disable-next-line no-param-reassign
       state.baseColor = hsl;
+    },
+
+    deriveSwatches(state) {
+      const saturationCurve = state.settings;
     },
   },
 });
