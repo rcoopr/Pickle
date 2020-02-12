@@ -11,12 +11,9 @@ const Wrapper = styled.div`
   grid-row-gap: 0px;
 `;
 
-const Container = styled.div`
+const ChartContainer = styled.div`
   background: hsl(212, 31%, 90%);
   border-radius: 6px;
-`;
-
-const ChartContainer = styled(Container)`
   padding: ${p => p.theme.sizing.medium};
   grid-area: 1 / 2 / 3 / 3;
   display: grid;

@@ -7,7 +7,6 @@ const Canvas = styled.div`
   width: 300px;
   height: 200px;
   position: relative;
-  grid-area: 1 / 2 / 2 / 3;
   border-left: 2px solid ${p => p.theme.colors.primary};
   border-bottom: 2px solid ${p => p.theme.colors.primary};
 `;
