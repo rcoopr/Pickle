@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { IGraphProps } from 'components/graph';
+import { IChartProps } from 'components/graph';
 
 const Canvas = styled.div`
   width: 300px;
@@ -27,6 +27,14 @@ const SVGCanvas = styled.svg`
   left: 0;
   bottom: 0;
   right: 0;
+
+  & .shadow {
+    filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.2));
+  }
+
+  & #active {
+    fill: #f9df9d;
+  }
 `;
 
 interface IGrid {
@@ -40,12 +48,12 @@ interface IChartArea {
   height: number;
 }
 
-export const Chart = ({ data, xAxis, yAxis, width, height }: IGraphProps) => {
+export const Chart = ({ data, xAxis, yAxis, width, height }: IChartProps) => {
   return (
     <Canvas>
       <Grid width={width} height={height} />
       <SVGCanvas width={width} height={height}>
-        {data.map(color => {
+        {data.map((color, i) => {
           const [h, s, l] = color;
           const fill = `hsl(${h}, ${s}%, ${l}%)`;
           const maxVal = (channel: number) => (channel === 0 ? 360 : 100);
@@ -58,7 +66,14 @@ export const Chart = ({ data, xAxis, yAxis, width, height }: IGraphProps) => {
           const y = ((height + padding - unscaledY) * (height - padding * 2)) / height;
           return (
             <g>
-              <circle cx={x} cy={y} r="10" fill="white" />
+              <circle
+                cx={x}
+                cy={y}
+                r="10"
+                fill="white"
+                className="shadow"
+                id={i === 4 ? 'active' : ''}
+              />
               <circle cx={x} cy={y} r="8" fill={fill} />
             </g>
           );
