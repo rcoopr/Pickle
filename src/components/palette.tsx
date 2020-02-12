@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { hslArrayToString } from 'utils/swatchColors';
+import { hslArrayToString } from 'utils/hslConvert';
 import { useSelector } from 'react-redux';
 import { RootState } from 'redux/rootReducer';
 
@@ -27,9 +27,8 @@ const Swatch = styled.div.attrs<{ bg: string }>(p => ({
 `;
 
 export const Palette = () => {
-  // const baseColor = useSelector((state: RootState) => state.palette.baseColor);
   const swatches = useSelector((state: RootState) => state.palette.swatches);
-  const swatchesHSLString = hslArrayToString(swatches);
+  const swatchesHSLString = swatches.map(swatch => hslArrayToString(swatch));
 
   return (
     <Container>

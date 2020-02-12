@@ -1,13 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-
 import Slider from 'react-input-slider';
-
+import { hslStringToArray, hslArrayToString } from 'utils/hslConvert';
 import { useSelector, useDispatch } from 'react-redux';
-import { changeBaseColorIfDiff } from 'redux/paletteSlice';
+import { updateStateIfDiff } from 'redux/paletteSlice';
 import { RootState } from 'redux/rootReducer';
-import Color from 'color';
-// TODO: Remove color dep
 
 interface IColorRect {
   bg: string;
@@ -176,75 +173,71 @@ export const Picker = () => {
   const baseColor = useSelector((state: RootState) => state.palette.baseColor);
   const dispatch = useDispatch();
 
-  const color = Color(baseColor);
+  const color = hslStringToArray(baseColor);
 
-  const handleChange = (val: number, channel: string) => {
-    const prevColor = color.hsl().object();
+  const handleChange = (val: number, channel: number) => {
     // eslint-disable-next-line prefer-const
-    let newColor = { ...prevColor };
+    let colorArray = color;
+    // eslint-disable-next-line prefer-const
     let value = Number.isNaN(val) ? 0 : val;
     value = value < 0 ? 0 : value;
-    if (channel === 'h') {
+    if (channel === 0) {
       value = value > 359 ? 359 : value;
     } else {
       value = value > 100 ? 100 : value;
     }
 
-    newColor[channel] = value;
-
-    const hsl = Color(newColor)
-      .hsl()
-      .toString();
-
-    dispatch(changeBaseColorIfDiff(hsl));
+    colorArray[channel] = value;
+    const hsl = hslArrayToString(colorArray);
+    dispatch(updateStateIfDiff(hsl));
   };
 
   return (
     <Container>
-      <ColorRect bg={color.hsl().toString()} />
+      <ColorRect bg={hslArrayToString(color)} />
       <Hue>
         <HueSlider
           styles={sliderStyles}
           xmax={359}
-          x={color.hue()}
+          x={color[0]}
           xstep={1}
-          onChange={({ x }) => handleChange(x, 'h')}
+          onChange={({ x }) => handleChange(x, 0)}
         />
         <HueEditableInput
           type="text"
-          value={color.hue()}
-          onChange={e => handleChange(parseInt(e.target.value, 10), 'h')}
+          value={color[0]}
+          onChange={e => handleChange(parseInt(e.target.value, 10), 0)}
         />
       </Hue>
       <Saturation>
         <SaturationSlider
           styles={sliderStyles}
           axis="x"
-          x={color.saturationl()}
+          x={color[1]}
           xstep={1}
-          onChange={({ x }) => handleChange(x, 's')}
-          hue={color.hue()}
-          lightness={color.lightness()}
+          onChange={({ x }) => handleChange(x, 1)}
+          hue={color[0]}
+          lightness={color[2]}
         />
         <SaturationEditableInput
           type="text"
-          value={color.saturationl()}
-          onChange={e => handleChange(parseInt(e.target.value, 10), 's')}
+          value={color[1]}
+          onChange={e => handleChange(parseInt(e.target.value, 10), 1)}
         />
       </Saturation>
       <Lightness>
         <LightnessSlider
           styles={sliderStyles}
-          x={color.lightness()}
+          x={color[2]}
           xstep={1}
-          onChange={({ x }) => handleChange(x, 'l')}
-          hue={color.hue()}
-          saturation={color.saturationl()}
+          onChange={({ x }) => handleChange(x, 2)}
+          hue={color[0]}
+          saturation={color[1]}
         />
         <LightnessEditableInput
           type="text"
-          value={color.lightness()}
-          onChange={e => handleChange(parseInt(e.target.value, 10), 'l')}
+          value={color[2]}
+          onChange={e => handleChange(parseInt(e.target.value, 10), 2)}
         />
       </Lightness>
       <CopyButtons>

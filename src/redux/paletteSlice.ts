@@ -2,8 +2,6 @@
 /* eslint-disable no-param-reassign */
 
 import { createSlice, Action, PayloadAction, ThunkAction } from '@reduxjs/toolkit';
-import Color from 'color';
-// TODO: Remove Color dep
 import { deriveSwatches } from 'utils/swatchColors';
 import { RootState } from 'redux/rootReducer';
 
@@ -16,51 +14,34 @@ const paletteSlice = createSlice({
   },
   reducers: {
     setBaseColor(state, action: PayloadAction<string>) {
-      const color = action.payload;
-      const hsl = Color(color)
-        .hsl()
-        .toString();
-
-      state.baseColor = hsl;
+      state.baseColor = action.payload;
     },
     setSaturationDelta(state, action: PayloadAction<number>) {
-      const value = action.payload;
-      state.saturationDelta = value;
+      state.saturationDelta = action.payload;
     },
-    // eslint-disable-next-line no-underscore-dangle
-    _setSwatches(state, action: PayloadAction<{ baseColor: string; saturationDelta: number }>) {
-      const { baseColor, saturationDelta } = action.payload;
-      const swatches = deriveSwatches(baseColor, saturationDelta);
-
-      state.swatches = swatches;
+    setSwatches(state, action: PayloadAction<number[][]>) {
+      state.swatches = action.payload;
     },
   },
 });
 
-export const { _setSwatches, setBaseColor, setSaturationDelta } = paletteSlice.actions;
+export const { setSwatches, setBaseColor, setSaturationDelta } = paletteSlice.actions;
 
-export const changeBaseColorIfDiff = (
-  color: string,
+export const updateStateIfDiff = (
+  color?: string,
+  delta?: number,
 ): ThunkAction<void, RootState, null, Action<string>> => (dispatch, getState) => {
   const {
     palette: { baseColor, saturationDelta },
   } = getState();
 
-  if (baseColor !== color) {
+  if (color && color !== baseColor) {
     dispatch(setBaseColor(color));
-    dispatch(_setSwatches({ baseColor, saturationDelta }));
   }
-};
 
-export const setSaturationDeltaAndSwatches = (
-  val: number,
-): ThunkAction<void, RootState, null, Action<string>> => (dispatch, getState) => {
-  const {
-    palette: { baseColor },
-  } = getState();
-
-  dispatch(setSaturationDelta(val));
-  dispatch(_setSwatches({ baseColor, saturationDelta: val }));
+  if (delta && delta !== saturationDelta) {
+    dispatch(setSaturationDelta(delta));
+  }
 };
 
 export default paletteSlice.reducer;
