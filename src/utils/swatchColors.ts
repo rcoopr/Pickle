@@ -1,4 +1,5 @@
 import Color from 'color';
+import { hslStringToArray } from 'utils/hslConvert';
 
 const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), max);
 
@@ -13,14 +14,6 @@ export const halfSine = (amplitude: number, verticalShift: number, period = 2, p
   return amplitude * Math.sin(((2 * Math.PI) / period) * (x + phaseShift)) + verticalShift;
 };
 
-export const hslStringToArray = (hslString: string) =>
-  hslString
-    .match(/[0-9]+/g)! // Catch each color channel
-    .map(val => parseInt(val, 10)); // Return an int
-
-export const hslArrayToString = (hslArray: number[][]) =>
-  hslArray.map(hsl => `hsl(${hsl[0]}, ${hsl[1]}%, ${hsl[2]}%)`);
-
 export const swatchesCSS = (swatches: number[][]) =>
   swatches.map(hslArray => Color.hsl(hslArray).hex());
 
@@ -31,7 +24,7 @@ export const deriveSwatches = (
   const baseColorHSL = hslStringToArray(baseColor);
 
   const amplitude = params;
-  const verticalShift = baseColorHSL[1];
+  const verticalShift = baseColorHSL[1] - amplitude;
   const partialHalfSine = halfSine(amplitude, verticalShift);
 
   const lightness = linearSpread(9);

@@ -56,19 +56,19 @@ describe('Swatch generator', () => {
   const testColor = 'hsl(191, 83, 50)';
   const testArray = [191, 83, 50];
   it('makes no changes without saturation alteration', () => {
-    const swatches = deriveSwatches(testColor, { saturationDelta: 0 });
+    const swatches = deriveSwatches(testColor, 0);
     expect(swatches[0][1]).toEqual(testArray[1]); // End point
     expect(swatches[2][1]).toEqual(testArray[1]); // Mid point
     expect(swatches[4]).toEqual(testArray); // Center point
   });
   it('works with positive saturation alteration', () => {
-    const swatches = deriveSwatches(testColor, { saturationDelta: 10 });
-    expect(swatches[0][1]).toBeGreaterThan(testArray[1]);
-    expect(swatches[4][1]).toEqual(testArray[1] + 10);
+    const swatches = deriveSwatches(testColor, 10);
+    expect(swatches[0][1]).toBeLessThan(testArray[1]);
+    expect(swatches[4][1]).toEqual(testArray[1]);
   });
   it('works with negative saturation alteration', () => {
-    const swatches = deriveSwatches(testColor, { saturationDelta: -10 });
-    expect(swatches[0][1]).toBeLessThan(testArray[1]);
-    expect(swatches[4][1]).toEqual(testArray[1] - 10);
+    const swatches = deriveSwatches(testColor, -10);
+    expect(swatches[0][1]).toBeGreaterThan(testArray[1]);
+    expect(swatches[4][1]).toEqual(testArray[1]);
   });
 });
