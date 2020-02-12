@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { setSaturationDelta } from 'redux/paletteSlice';
+import { setSaturationDelta, setHueDelta } from 'redux/paletteSlice';
 import { RootState } from 'redux/rootReducer';
 import { Graph } from 'components/graph';
 import Slider from 'react-input-slider';
@@ -54,11 +54,12 @@ const sliderStyles = {
 export const Settings = () => {
   const data = useSelector((state: RootState) => state.palette.swatches);
   const saturationDelta = useSelector((state: RootState) => state.palette.saturationDelta);
-  // const hueDelta = useSelector((state: RootState) => state.palette.hueDelta);
+  const hueDelta = useSelector((state: RootState) => state.palette.hueDelta);
 
   const dispatch = useDispatch();
 
-  const handleChange = (val: number) => dispatch(setSaturationDelta(val));
+  const handleChangeSaturation = (val: number) => dispatch(setSaturationDelta(val));
+  const handleChangeHue = (val: number) => dispatch(setHueDelta(val));
 
   return (
     <Container>
@@ -71,7 +72,7 @@ export const Settings = () => {
             ystep={1}
             ymin={-50}
             ymax={50}
-            onChange={({ y }) => handleChange(y)}
+            onChange={({ y }) => handleChangeSaturation(y)}
           />
         </SliderContainer>
       </Graph>
@@ -80,11 +81,11 @@ export const Settings = () => {
           <Slider
             styles={sliderStyles}
             axis="y"
-            y={saturationDelta}
+            y={hueDelta}
             ystep={1}
-            ymin={-50}
-            ymax={50}
-            onChange={({ y }) => handleChange(y)}
+            ymin={-100}
+            ymax={100}
+            onChange={({ y }) => handleChangeHue(y)}
           />
         </SliderContainer>
       </Graph>
