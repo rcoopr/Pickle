@@ -266,11 +266,11 @@ export const Picker = () => {
         />
       </Lightness>
       <CopyButtons>
-        <HiddenText className="copyHex" value={copyHex.join('\n').toString()} />
+        <HiddenText className="copyHex" readOnly value={copyHex.join('\n').toString()} />
         <HexButton onClick={() => copy('.copyHex')}>Hex</HexButton>
-        <HiddenText className="copyHSL" value={copyHSL.join('\n').toString()} />
+        <HiddenText className="copyHSL" readOnly value={copyHSL.join('\n').toString()} />
         <HSLButton onClick={() => copy('.copyHSL')}>HSL</HSLButton>
-        <HiddenText className="copyRGB" value={copyRGB.join('\n').toString()} />
+        <HiddenText className="copyRGB" readOnly value={copyRGB.join('\n').toString()} />
         <RGBButton onClick={() => copy('.copyRGB')}>RGB</RGBButton>
       </CopyButtons>
     </Container>

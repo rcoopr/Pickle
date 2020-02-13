@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 import React from 'react';
 import styled from 'styled-components';
 
@@ -64,7 +65,7 @@ export const Chart = ({ data, xAxis, yAxis, width, height }: IChartProps) => {
           const x = ((padding + unscaledX) * (width - padding * 2)) / width;
           const y = ((height + padding - unscaledY) * (height - padding * 2)) / height;
           return (
-            <g>
+            <g key={i}>
               <circle
                 cx={x}
                 cy={y}
@@ -72,8 +73,9 @@ export const Chart = ({ data, xAxis, yAxis, width, height }: IChartProps) => {
                 fill="white"
                 className="shadow"
                 id={i === 4 ? 'active' : ''}
+                key={`${x}-${y}-${i}`}
               />
-              <circle cx={x} cy={y} r="8" fill={fill} />
+              <circle cx={x} cy={y} r="8" fill={fill} key={`${fill}-${i}`} />
             </g>
           );
         })}
