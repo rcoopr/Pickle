@@ -1,7 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
 import Slider from 'react-input-slider';
-import { hslStringToArray, hslArrayToString } from 'utils/hslConvert';
+
+import {
+  hslStringToArray,
+  hslArrayToString,
+  swatchesHex,
+  swatchesHSL,
+  swatchesRGB,
+  formatStringsToCopy,
+} from 'utils/hslConvert';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateStateIfDiff } from 'redux/paletteSlice';
 import { RootState } from 'redux/rootReducer';
@@ -136,7 +144,13 @@ const CopyButtons = styled.ul`
   list-style: none;
 `;
 
-const ColorButton = styled.button``;
+const ColorButton = styled.button<{ onClick: any }>``;
+
+const HiddenText = styled.textarea`
+  position: absolute;
+  top: -999em;
+  left: -999em;
+`;
 
 const HexButton = styled(ColorButton)``;
 const HSLButton = styled(ColorButton)``;
@@ -171,6 +185,7 @@ export const Picker = () => {
   // };
 
   const baseColor = useSelector((state: RootState) => state.palette.baseColor);
+  const swatches = useSelector((state: RootState) => state.palette.swatches);
   const dispatch = useDispatch();
 
   const color = hslStringToArray(baseColor);
@@ -190,6 +205,16 @@ export const Picker = () => {
     colorArray[channel] = value;
     const hsl = hslArrayToString(colorArray);
     dispatch(updateStateIfDiff(hsl));
+  };
+
+  const copyHex = formatStringsToCopy(swatchesHex(swatches));
+  const copyHSL = formatStringsToCopy(swatchesHSL(swatches));
+  const copyRGB = formatStringsToCopy(swatchesRGB(swatches));
+
+  const copy = (selector: string) => {
+    const copyText = document.querySelector(selector) as HTMLTextAreaElement;
+    copyText.select();
+    document.execCommand('copy');
   };
 
   return (
@@ -241,9 +266,12 @@ export const Picker = () => {
         />
       </Lightness>
       <CopyButtons>
-        <HexButton>Hex</HexButton>
-        <HSLButton>HSL</HSLButton>
-        <RGBButton>RGB</RGBButton>
+        <HiddenText className="copyHex" value={copyHex.join('\n').toString()} />
+        <HexButton onClick={() => copy('.copyHex')}>Hex</HexButton>
+        <HiddenText className="copyHSL" value={copyHSL.join('\n').toString()} />
+        <HSLButton onClick={() => copy('.copyHSL')}>HSL</HSLButton>
+        <HiddenText className="copyRGB" value={copyRGB.join('\n').toString()} />
+        <RGBButton onClick={() => copy('.copyRGB')}>RGB</RGBButton>
       </CopyButtons>
     </Container>
   );
