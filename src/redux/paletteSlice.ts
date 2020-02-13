@@ -10,8 +10,8 @@ const paletteSlice = createSlice({
   initialState: {
     baseColor: 'hsl(191, 83%, 57%)',
     saturationDelta: -20,
-    hueDelta: -40,
-    swatches: deriveSwatches('hsl(191, 83%, 57%)', -20, -40),
+    hueDelta: -16,
+    swatches: deriveSwatches('hsl(191, 83%, 57%)', -20, -16),
   },
   reducers: {
     setBaseColor(state, action: PayloadAction<string>) {
