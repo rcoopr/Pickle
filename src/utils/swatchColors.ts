@@ -30,7 +30,7 @@ export const deriveSwatches = (baseColor: string, saturationDelta: number, hueDe
 
   const amplitude = saturationDelta;
   const verticalShift = baseColorHSL[1] - amplitude;
-  const period = lightnessSpace * 2 * 2;
+  const period = Math.max(lightnessSpace * 2 * 2, 0.001);
   const phaseShift = -(baseLightnessFraction - lightnessSpace);
   const partialHalfSine = halfSine(amplitude, verticalShift, period, phaseShift);
 
