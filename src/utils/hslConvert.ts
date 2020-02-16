@@ -29,7 +29,7 @@ export const hslArrayToString = (hslArray: number[]) =>
  * @param  {string[]} strings of format 'hsl(h, s%, l%)'
  */
 export const formatStringsToCopy = (strings: string[]) =>
-  strings.map((string, i) => `'${(i + 1) * 100}': '${string}',`);
+  strings.map((string, i) => `${(i + 1) * 100}: '${string}',`);
 
 /**
  * Converts from HSL into Hex format
