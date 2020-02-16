@@ -12,7 +12,7 @@ export const clamp = (value: number, min: number, max: number): number =>
   Math.min(Math.max(value, min), max);
 
 /**
- * Return values spread evenly from min to max
+ * Return values spread evenly (without using endpoints) from min to max
  *
  * @param {number} numItems
  * @param {number} min
@@ -26,7 +26,7 @@ export const linearSpread = (numItems: number, min: number, max: number): number
       const valBetween0and1 = (i + 1) / (numItems + 1);
       const scaledValue = valBetween0and1 * (max - min) + min;
 
-      return scaledValue;
+      return Math.round(scaledValue * 100) / 100;
     });
 
 /**
