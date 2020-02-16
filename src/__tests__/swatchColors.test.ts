@@ -1,4 +1,4 @@
-import { clamp, halfSine, deriveSwatches } from 'utils/swatchColors';
+import { clamp, linearSpread, halfSine, deriveSwatches } from 'utils/swatchColors';
 
 describe('Clamp function', () => {
   it('works with number values within range', () => {
@@ -9,6 +9,21 @@ describe('Clamp function', () => {
   });
   it('works with number values below the range', () => {
     expect(clamp(-6, 0, 1)).toBe(0);
+  });
+});
+
+describe('Linear spread function', () => {
+  it('works with positive values', () => {
+    const oddNumberItems = linearSpread(3, 0, 1);
+    const evenNumberItems = linearSpread(2, 0, 1);
+    expect(oddNumberItems[0]).toBe(0.25);
+    expect(oddNumberItems[1]).toBe(0.5);
+    expect(oddNumberItems[2]).toBe(0.75);
+    expect(evenNumberItems[0]).toBe(0.33);
+  });
+  it('works with negative numbers', () => {
+    const negativeArray = linearSpread(5, 0, -1);
+    expect(negativeArray[2]).toBe(-0.5);
   });
 });
 
