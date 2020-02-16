@@ -64,7 +64,7 @@ export interface IChartProps {
   data: number[][];
   xAxis: {
     name: string;
-    channel: number; // 0 | 1 | 2
+    channel: number;
   };
   yAxis: {
     name: string;

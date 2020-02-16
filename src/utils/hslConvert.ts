@@ -10,9 +10,7 @@ import Color from 'color';
  * @return {number[]} [h, s, l]
  */
 export const hslStringToArray = (hslString: string) =>
-  hslString
-    .match(/[0-9]+/g)! // Catch each color channel
-    .map(val => parseInt(val, 10)); // Return an int
+  hslString.match(/[0-9]+/g)!.map(val => parseInt(val, 10));
 
 /**
  * For conversion between array of color channels to human-readable string format
