@@ -36,9 +36,7 @@ export const updateStateIfDiff = (
   sDelta?: number,
   hDelta?: number,
 ): ThunkAction<void, RootState, null, Action<string>> => (dispatch, getState) => {
-  const {
-    palette: { baseColor, saturationDelta, hueDelta },
-  } = getState();
+  const { baseColor, saturationDelta, hueDelta } = getState();
 
   if (color && color !== baseColor) {
     dispatch(setBaseColor(color));

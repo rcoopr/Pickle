@@ -184,8 +184,8 @@ export const Picker = () => {
   //     hsl(${color.hue}, 100%, ${color.lightness}%)`,
   // };
 
-  const baseColor = useSelector((state: RootState) => state.palette.baseColor);
-  const swatches = useSelector((state: RootState) => state.palette.swatches);
+  const baseColor = useSelector((state: RootState) => state.baseColor);
+  const swatches = useSelector((state: RootState) => state.swatches);
   const dispatch = useDispatch();
 
   const color = hslStringToArray(baseColor);

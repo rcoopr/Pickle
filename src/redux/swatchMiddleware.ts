@@ -6,9 +6,7 @@ export const swatchMiddleware: Middleware = ({ getState, dispatch }) => next => 
   const result = next(action);
 
   if (action.type.includes('palette') && action.type !== 'palette/setSwatches') {
-    const {
-      palette: { baseColor, saturationDelta, hueDelta },
-    } = getState();
+    const { baseColor, saturationDelta, hueDelta } = getState();
     const swatches = deriveSwatches(baseColor, saturationDelta, hueDelta);
     dispatch(setSwatches(swatches));
   }

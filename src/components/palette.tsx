@@ -27,7 +27,7 @@ const Swatch = styled.div.attrs<{ bg: string }>(p => ({
 `;
 
 export const Palette = () => {
-  const swatches = useSelector((state: RootState) => state.palette.swatches);
+  const swatches = useSelector((state: RootState) => state.swatches);
   const swatchesHSLString = swatches.map(swatch => hslArrayToString(swatch));
 
   return (

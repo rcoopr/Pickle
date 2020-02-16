@@ -52,9 +52,9 @@ const sliderStyles = {
 };
 
 export const Settings = () => {
-  const data = useSelector((state: RootState) => state.palette.swatches);
-  const saturationDelta = useSelector((state: RootState) => state.palette.saturationDelta);
-  const hueDelta = useSelector((state: RootState) => state.palette.hueDelta);
+  const data = useSelector((state: RootState) => state.swatches);
+  const saturationDelta = useSelector((state: RootState) => state.saturationDelta);
+  const hueDelta = useSelector((state: RootState) => state.hueDelta);
 
   const dispatch = useDispatch();
 
