@@ -8,7 +8,7 @@ import { hslStringToArray } from 'utils/hslConvert';
  * @param {number} max
  * @returns {number}
  */
-const clamp = (value: number, min: number, max: number): number =>
+export const clamp = (value: number, min: number, max: number): number =>
   Math.min(Math.max(value, min), max);
 
 /**
@@ -19,7 +19,7 @@ const clamp = (value: number, min: number, max: number): number =>
  * @param {number} max
  * @returns {number[]}
  */
-const linearSpread = (numItems: number, min: number, max: number): number[] =>
+export const linearSpread = (numItems: number, min: number, max: number): number[] =>
   Array(numItems)
     .fill(0)
     .map((_, i) => {
