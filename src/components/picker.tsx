@@ -99,15 +99,6 @@ const HueSlider = styled(Slider)`
   );
 `;
 
-// Old style, seems to cause too many classes being created by SC
-// const SaturationSlider = styled(Slider)<ISliderProps>`
-//   background-image: linear-gradient(
-//     to right,
-//     hsl(${p => p.hue}, 0%, ${p => p.lightness}%),
-//     hsl(${p => p.hue}, 100%, ${p => p.lightness}%)
-//   );
-// `;
-
 const SaturationSlider = styled(Slider).attrs<ISliderProps>(p => ({
   style: {
     backgroundImage: `linear-gradient(to right, hsl(${p.hue}, 0%, ${p.lightness}%), hsl(${p.hue}, 100%, ${p.lightness}%))`,
@@ -167,8 +158,6 @@ const sliderStyles = {
   thumb: {
     height: 18,
     width: 9,
-    // height: 10,
-    // width: 6,
     borderRadius: '2px',
     boxShadow: 'none',
     border: '1px solid rgba(210, 210, 210, 1)',
@@ -176,14 +165,6 @@ const sliderStyles = {
 };
 
 export const Picker = () => {
-  // TODO: Put in useEffect, dependent on color.hue, color.lightness
-  // TODO: Also add one for lightness
-  // const saturationBackgroundStyle = {
-  //   backgroundImage: `linear-gradient(to right,
-  //     hsl(${color.hue}, 0, ${color.lightness}%),
-  //     hsl(${color.hue}, 100%, ${color.lightness}%)`,
-  // };
-
   const baseColor = useSelector((state: RootState) => state.baseColor);
   const swatches = useSelector((state: RootState) => state.swatches);
   const dispatch = useDispatch();
