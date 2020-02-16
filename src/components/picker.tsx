@@ -191,9 +191,7 @@ export const Picker = () => {
   const color = hslStringToArray(baseColor);
 
   const handleChange = (val: number, channel: number) => {
-    // eslint-disable-next-line prefer-const
-    let colorArray = color;
-    // eslint-disable-next-line prefer-const
+    const colorArray = color;
     let value = Number.isNaN(val) ? 0 : val;
     value = value < 0 ? 0 : value;
     if (channel === 0) {

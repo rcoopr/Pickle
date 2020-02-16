@@ -33,7 +33,6 @@ export const Palette = () => {
   return (
     <Container>
       {swatchesHSLString.map((color, i) => {
-        // eslint-disable-next-line react/no-array-index-key
         return <Swatch bg={color} key={i} />;
       })}
     </Container>
