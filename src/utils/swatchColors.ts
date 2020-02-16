@@ -1,34 +1,58 @@
 import { hslStringToArray } from 'utils/hslConvert';
 
-// Returns value no smaller than min, no larger than max
-const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), max);
+/**
+ * Returns value no smaller than min, no larger than max
+ *
+ * @param {number} value
+ * @param {number} min
+ * @param {number} max
+ * @returns {number}
+ */
+const clamp = (value: number, min: number, max: number): number =>
+  Math.min(Math.max(value, min), max);
 
-// Return numItems as #values spread evenly from min to max
-const linearSpread = (numItems: number, min = 0, max = 1) =>
+/**
+ * Return values spread evenly from min to max
+ *
+ * @param {number} numItems
+ * @param {number} min
+ * @param {number} max
+ * @returns {number[]}
+ */
+const linearSpread = (numItems: number, min: number, max: number): number[] =>
   Array(numItems)
     .fill(0)
     .map((_, i) => {
-      // Spread values evenly from 0 to 1
       const valBetween0and1 = (i + 1) / (numItems + 1);
-      // Scale by the output range and increase all values by minimum output value
-      return valBetween0and1 * (max - min) + min;
+      const scaledValue = valBetween0and1 * (max - min) + min;
+
+      return scaledValue;
     });
 
-// Internal function - Maps linear input values (lightness) to variable output (saturation and hue)
-// Curried to reduce extrraneous function creations. Each time the user-selected color changes,
-// the partial function is called once for each tone
-export const halfSine = (amplitude: number, verticalShift: number, period = 2, phaseShift = 0) => (
-  x: number,
-) => {
-  // General form of sine wave is dependent on these 4 variables;
-  // Amplitude: maximum height offset from origin,
-  // Period: length of repeating segment,
-  // Phase shift: negative horizontal offset from origin,
-  // Vertical shift: vertical offset from origin
+/**
+ * Maps input values (from linearSpread) to values from half of a sine function. Used for tuning
+ *    saturation of swatches. Curried to reduce extrraneous function creations. Each time the
+ *    user-selected color changes, the partial function is called once for each tone.
+ *
+ * @param {number} amplitude maximum height offset from origin
+ * @param {number} verticalShift length of repeating segment
+ * @param {number} [period=2] negative horizontal offset from origin
+ * @param {number} [phaseShift=0] vertical offset from origin
+ */
+export const halfSine = (
+  amplitude: number,
+  verticalShift: number,
+  period: number = 2,
+  phaseShift: number = 0,
+) => (x: number) => {
   return amplitude * Math.sin(((2 * Math.PI) / period) * (x + phaseShift)) + verticalShift;
 };
 
 /**
+ * Takes the user-selected base color and returns color channel data for tones from dark to light.
+ *    Tunes saturation at high- and low-ends of lightness to avoid washout.
+ *    Tunes hue to rotate about the central point to adjust for perceived brightness.
+ *
  * @param  {string} baseColor user-selected color
  * @param  {number} saturationDelta difference in saturation from the most-saturated tone to the least
  * @param  {number} hueDelta difference in hue from the first tone to the last
