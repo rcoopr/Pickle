@@ -8,12 +8,11 @@ const Container = styled.header`
 `;
 
 const Title = styled.h1`
-  font-family: 'Montserrat Alternates';
   font-size: ${p => p.theme.fonts.medium};
 `;
 
 const Description = styled.h2`
-  font-weight: 700;
+  font-weight: 400;
   font-size: ${p => p.theme.fonts.small};
 `;
 
