@@ -4,9 +4,9 @@ import styled from 'styled-components';
 
 import { IChartProps } from 'components/graph';
 
-const Canvas = styled.div`
-  width: 300px;
-  height: 200px;
+const Canvas = styled.div<{ width: number; height: number }>`
+  width: ${p => p.width}px;
+  height: ${p => p.height}px;
   position: relative;
   border-left: 2px solid ${p => p.theme.colors.primary};
   border-bottom: 2px solid ${p => p.theme.colors.primary};
@@ -50,7 +50,7 @@ interface IChartArea {
 
 export const Chart = ({ data, xAxis, yAxis, width, height }: IChartProps) => {
   return (
-    <Canvas>
+    <Canvas width={width} height={height}>
       <Grid width={width} height={height} />
       <SVGCanvas width={width} height={height}>
         {data.map((color, i) => {
