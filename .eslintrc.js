@@ -25,6 +25,7 @@ module.exports = {
     'react/no-array-index-key': 'off',
     'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
     'import/prefer-default-export': 'off',
+    'no-param-reassign': 'off',
   },
   parser: '@typescript-eslint/parser',
   settings: {

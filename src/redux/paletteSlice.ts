@@ -1,6 +1,3 @@
-// Reducers are wrapped in Immer's produce by RTK
-/* eslint-disable no-param-reassign */
-
 import { createSlice, Action, PayloadAction, ThunkAction } from '@reduxjs/toolkit';
 import { deriveSwatches } from 'utils/swatchColors';
 import { RootState } from 'redux/rootReducer';
