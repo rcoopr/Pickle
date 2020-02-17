@@ -2,6 +2,8 @@ import React from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 import theme from 'theme';
 import GlobalStyles from 'globalStyles';
+import { Provider } from 'react-redux';
+import store from 'redux/store';
 
 import Octicon, { MarkGithub } from '@primer/octicons-react';
 import { Header } from 'components/header';
@@ -64,25 +66,27 @@ const GithubLink = styled(Octicon)`
 `;
 
 const App = () => (
-  <ThemeProvider theme={theme}>
-    <GlobalStyles />
-    <Container data-testid="container">
-      <PickerPane>
-        <Header />
-        <Picker />
-      </PickerPane>
-      <Settings />
-      <Footer>
-        <Palette />
-        <Watermark>
-          <a href="https://github.com/Froskk">
-            <GithubLink icon={MarkGithub} verticalAlign="middle" ariaLabel="Github link" />
-            <span>MADE BY ROSS COOPER</span>
-          </a>
-        </Watermark>
-      </Footer>
-    </Container>
-  </ThemeProvider>
+  <Provider store={store}>
+    <ThemeProvider theme={theme}>
+      <GlobalStyles />
+      <Container data-testid="container">
+        <PickerPane>
+          <Header />
+          <Picker />
+        </PickerPane>
+        <Settings />
+        <Footer>
+          <Palette />
+          <Watermark>
+            <a href="https://github.com/Froskk">
+              <GithubLink icon={MarkGithub} verticalAlign="middle" ariaLabel="Github link" />
+              <span>MADE BY ROSS COOPER</span>
+            </a>
+          </Watermark>
+        </Footer>
+      </Container>
+    </ThemeProvider>
+  </Provider>
 );
 
 export default App;
