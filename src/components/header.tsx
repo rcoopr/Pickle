@@ -2,9 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Container = styled.header`
-  position: absolute;
-  top: ${p => p.theme.sizing.large};
-  left: ${p => p.theme.sizing.large};
+  padding: ${p => p.theme.sizing.large};
+  align-self: flex-start;
 `;
 
 const Title = styled.h1`
