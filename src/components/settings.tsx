@@ -2,8 +2,13 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { setSaturationDelta, setHueDelta } from 'redux/paletteSlice';
-import { RootState } from 'redux/rootReducer';
+import {
+  setSaturationDelta,
+  setHueDelta,
+  selectSwatches,
+  selectHueDelta,
+  selectSaturationDelta,
+} from 'redux/paletteSlice';
 import { Graph } from 'components/graph';
 import Slider from 'react-input-slider';
 
@@ -52,9 +57,9 @@ const sliderStyles = {
 };
 
 export const Settings = () => {
-  const data = useSelector((state: RootState) => state.swatches);
-  const saturationDelta = useSelector((state: RootState) => state.saturationDelta);
-  const hueDelta = useSelector((state: RootState) => state.hueDelta);
+  const swatches = useSelector(selectSwatches);
+  const saturationDelta = useSelector(selectSaturationDelta);
+  const hueDelta = useSelector(selectHueDelta);
 
   const dispatch = useDispatch();
 
@@ -63,7 +68,7 @@ export const Settings = () => {
 
   return (
     <Container>
-      <Graph xAxis={channels.light} yAxis={channels.sat} data={data} width={300} height={200}>
+      <Graph xAxis={channels.light} yAxis={channels.sat} data={swatches} width={300} height={200}>
         <SliderContainer>
           <Slider
             styles={sliderStyles}
@@ -76,7 +81,7 @@ export const Settings = () => {
           />
         </SliderContainer>
       </Graph>
-      <Graph xAxis={channels.light} yAxis={channels.hue} data={data} width={300} height={200}>
+      <Graph xAxis={channels.light} yAxis={channels.hue} data={swatches} width={300} height={200}>
         <SliderContainer>
           <Slider
             styles={sliderStyles}

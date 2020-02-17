@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { hslArrayToString } from 'utils/hslConvert';
 import { useSelector } from 'react-redux';
-import { RootState } from 'redux/rootReducer';
+import { selectSwatches } from 'redux/paletteSlice';
 
 const Container = styled.div`
   display: flex;
@@ -27,7 +27,7 @@ const Swatch = styled.div.attrs<{ bg: string }>(p => ({
 `;
 
 export const Palette = () => {
-  const swatches = useSelector((state: RootState) => state.swatches);
+  const swatches = useSelector(selectSwatches);
   const swatchesHSLString = swatches.map(swatch => hslArrayToString(swatch));
 
   return (

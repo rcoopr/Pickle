@@ -2,14 +2,16 @@ import { createSlice, Action, PayloadAction, ThunkAction } from '@reduxjs/toolki
 import { deriveSwatches } from 'utils/swatchColors';
 import { RootState } from 'redux/rootReducer';
 
+export const initialState = {
+  baseColor: 'hsl(191, 83%, 57%)',
+  saturationDelta: -20,
+  hueDelta: -40,
+  swatches: deriveSwatches('hsl(191, 83%, 57%)', -20, -40),
+};
+
 const paletteSlice = createSlice({
   name: 'palette',
-  initialState: {
-    baseColor: 'hsl(191, 83%, 57%)',
-    saturationDelta: -20,
-    hueDelta: -40,
-    swatches: deriveSwatches('hsl(191, 83%, 57%)', -20, -40),
-  },
+  initialState,
   reducers: {
     setBaseColor(state, action: PayloadAction<string>) {
       state.baseColor = action.payload;
@@ -47,5 +49,10 @@ export const updateStateIfDiff = (
     dispatch(setHueDelta(hDelta));
   }
 };
+
+export const selectBaseColor = (state: RootState) => state.baseColor;
+export const selectSaturationDelta = (state: RootState) => state.saturationDelta;
+export const selectHueDelta = (state: RootState) => state.hueDelta;
+export const selectSwatches = (state: RootState) => state.swatches;
 
 export default paletteSlice.reducer;

@@ -11,8 +11,7 @@ import {
   formatStringsToCopy,
 } from 'utils/hslConvert';
 import { useSelector, useDispatch } from 'react-redux';
-import { updateStateIfDiff } from 'redux/paletteSlice';
-import { RootState } from 'redux/rootReducer';
+import { updateStateIfDiff, selectBaseColor, selectSwatches } from 'redux/paletteSlice';
 
 interface IColorRect {
   bg: string;
@@ -165,8 +164,8 @@ const sliderStyles = {
 };
 
 export const Picker = () => {
-  const baseColor = useSelector((state: RootState) => state.baseColor);
-  const swatches = useSelector((state: RootState) => state.swatches);
+  const baseColor = useSelector(selectBaseColor);
+  const swatches = useSelector(selectSwatches);
   const dispatch = useDispatch();
 
   const color = hslStringToArray(baseColor);
