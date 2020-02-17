@@ -3,9 +3,9 @@ import { deriveSwatches } from 'utils/swatchColors';
 
 export const initialState = {
   baseColor: 'hsl(191, 83%, 57%)',
-  saturationDelta: -20,
-  hueDelta: -40,
-  swatches: deriveSwatches('hsl(191, 83%, 57%)', -20, -40),
+  saturationDelta: -10,
+  hueDelta: -20,
+  swatches: deriveSwatches('hsl(191, 83%, 57%)', -10, -20),
 };
 
 const paletteSlice = createSlice({
