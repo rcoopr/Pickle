@@ -14,7 +14,7 @@ export const clamp = (value: number, min: number, max: number): number => {
 };
 
 /**
- * Return values spread evenly (without using endpoints) from min to max
+ * Return values spread evenly from min to max
  *
  * @param {number} numItems
  * @param {number} min
@@ -25,10 +25,10 @@ export const linearSpread = (numItems: number, min: number, max: number): number
   Array(numItems)
     .fill(0)
     .map((_, i) => {
-      const valBetween0and1 = (i + 1) / (numItems + 1);
-      const scaledValue = valBetween0and1 * (max - min) + min;
+      const step = (max - min) / (numItems - 1);
+      const result = min + i * step;
 
-      return Math.round(scaledValue * 100) / 100;
+      return result;
     });
 
 /**
@@ -64,8 +64,12 @@ export const deriveSwatches = (baseColor: string, saturationDelta: number, hueDe
 
   // Lightness as a value from [0, 1]; Forms a base unit value to scale saturation from
   const baseLightnessFraction = baseColorHSL[2] / 100;
-  // The smaller of the 2 distances from [0, baselightnessFraction] and [baselightnessFraction, 1]
-  const lightnessSpace = Math.min(baseLightnessFraction, 1 - baseLightnessFraction);
+  // The smaller of the 2 distances from [minLightness, baselightnessFraction] and [baselightnessFraction, maxLightness]
+  const [minLightness, maxLightness] = [0.15, 0.95];
+  const lightnessSpace = Math.min(
+    baseLightnessFraction - minLightness,
+    maxLightness - baseLightnessFraction,
+  );
   // Spread values across the space. This prevents values exceeding the edges of the graph
   const lightness = linearSpread(
     9,
@@ -89,7 +93,9 @@ export const deriveSwatches = (baseColor: string, saturationDelta: number, hueDe
   const partialHalfSine = halfSine(amplitude, verticalShift, period, phaseShift);
 
   // return [vals] between [0, 100] for generated saturation
-  const saturation = lightness.map(val => clamp(partialHalfSine(val), 0, 100));
+  const saturation = lightness.map(val =>
+    clamp(partialHalfSine(val), minLightness * 100, maxLightness * 100),
+  );
 
   const swatches = lightness.map((lightValue, i) => [hue[i], saturation[i], 100 * lightValue]);
   return swatches;
