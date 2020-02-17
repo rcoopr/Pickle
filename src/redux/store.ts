@@ -1,6 +1,6 @@
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 
-import rootReducer, { RootState } from 'redux/rootReducer';
+import rootReducer, { RootState } from 'redux/paletteSlice';
 import { swatchMiddleware } from 'redux/swatchMiddleware';
 
 const store = configureStore({

@@ -1,6 +1,5 @@
 import { createSlice, Action, PayloadAction, ThunkAction } from '@reduxjs/toolkit';
 import { deriveSwatches } from 'utils/swatchColors';
-import { RootState } from 'redux/rootReducer';
 
 export const initialState = {
   baseColor: 'hsl(191, 83%, 57%)',
@@ -54,5 +53,7 @@ export const selectBaseColor = (state: RootState) => state.baseColor;
 export const selectSaturationDelta = (state: RootState) => state.saturationDelta;
 export const selectHueDelta = (state: RootState) => state.hueDelta;
 export const selectSwatches = (state: RootState) => state.swatches;
+
+export type RootState = ReturnType<typeof paletteSlice.reducer>;
 
 export default paletteSlice.reducer;
