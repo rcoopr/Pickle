@@ -14,7 +14,7 @@ import { Picker } from 'components/picker';
 const Container = styled.main`
   display: flex;
   background: ${p => p.theme.colors.secondary};
-  padding-bottom: 203px;
+  padding-bottom: ${p => `${p.theme.sizing.palette + p.theme.sizing.watermark}px`};
 `;
 
 const PickerPane = styled.section`
@@ -23,7 +23,7 @@ const PickerPane = styled.section`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding-bottom: 150px;
+  padding-bottom: ${p => p.theme.sizing.palette}px;
 `;
 
 const Footer = styled.footer`
@@ -31,7 +31,7 @@ const Footer = styled.footer`
   bottom: 0;
   left: 0;
   right: 0;
-  padding-bottom: 53px;
+  padding-bottom: ${p => p.theme.sizing.watermark}px;
   background: ${p => p.theme.colors.secondary};
   z-index: 2;
 `;
@@ -43,20 +43,21 @@ const Watermark = styled.div`
   right: 0;
   padding: ${p => p.theme.sizing.medium};
   font-size: ${p => p.theme.fonts.small};
-  color: #00000066;
-  z-index: 1;
+  color: ${p => p.theme.colors.palette[100]};
+  opacity: 0.6;
+`;
 
-  & > a {
-    color: inherit;
-    text-decoration: none;
+const GithubLink = styled.a`
+  color: inherit;
+  text-decoration: none;
 
-    &:hover {
-      text-decoration: underline;
-    }
+  &:hover {
+    text-decoration: underline;
+    color: ${p => p.theme.colors.palette[300]};
   }
 `;
 
-const GithubLink = styled(Octicon)`
+const GithubIcon = styled(Octicon)`
   margin-right: 0.4em;
   font-size: 2em;
   width: ${p => p.theme.fonts.larger};
@@ -77,10 +78,10 @@ const App = () => (
       <Footer>
         <Palette />
         <Watermark>
-          <a href="https://github.com/Froskk">
-            <GithubLink icon={MarkGithub} verticalAlign="middle" ariaLabel="Github link" />
+          <GithubLink href="https://github.com/Froskk">
+            <GithubIcon icon={MarkGithub} verticalAlign="middle" ariaLabel="Github link" />
             <span>MADE BY ROSS COOPER</span>
-          </a>
+          </GithubLink>
         </Watermark>
       </Footer>
     </ThemeProvider>
