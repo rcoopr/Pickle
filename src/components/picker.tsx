@@ -13,7 +13,7 @@ import {
 import { clamp } from 'utils/swatchColors';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { updateStateIfDiff, selectBaseColor, selectSwatches } from 'redux/paletteSlice';
+import { selectBaseColor, selectSwatches, setBaseColor } from 'redux/paletteSlice';
 
 interface IColorRect {
   bg: string;
@@ -150,12 +150,14 @@ export const Picker = () => {
     const [H, S, L] = color;
     let newColor: number[] = [];
 
-    if (channel === 0) newColor = [clamp(H, 0, 359), S, L];
-    if (channel === 1) newColor = [H, clamp(S, 0, 100), L];
-    if (channel === 2) newColor = [H, S, clamp(L, 0, 100)];
+    if (channel === 0) newColor = [clamp(val, 0, 359), S, L];
+    if (channel === 1) newColor = [H, clamp(val, 0, 100), L];
+    if (channel === 2) newColor = [H, S, clamp(val, 0, 100)];
 
-    const hsl = hslArrayToString(newColor);
-    dispatch(updateStateIfDiff(hsl));
+    if (newColor[0] !== H || newColor[1] !== S || newColor[2] !== L) {
+      const hsl = hslArrayToString(newColor);
+      dispatch(setBaseColor(hsl));
+    }
   };
 
   const copyHex = formatStringsToCopy(swatchesHex(swatches));
