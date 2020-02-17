@@ -10,6 +10,8 @@ import {
   swatchesRGB,
   formatStringsToCopy,
 } from 'utils/hslConvert';
+import { clamp } from 'utils/swatchColors';
+
 import { useSelector, useDispatch } from 'react-redux';
 import { updateStateIfDiff, selectBaseColor, selectSwatches } from 'redux/paletteSlice';
 
@@ -27,43 +29,21 @@ const Container = styled.section`
   padding: ${p => p.theme.sizing.medium};
   background: #fff;
   border-radius: 6px;
-  border: 1px solid #9b9b9b;
   box-shadow: 0 0.2px 0.4px rgba(0, 0, 0, 0.024), 0 0.6px 1px rgba(0, 0, 0, 0.035),
     0 1.5px 2.4px rgba(0, 0, 0, 0.046), 0 5px 8px rgba(0, 0, 0, 0.07);
 `;
 
-const ColorRect = styled.div<IColorRect>`
+const ColorRect = styled.div.attrs<IColorRect>(p => ({
+  style: {
+    background: `${p.bg}`,
+    marginBottom: `${p.theme.sizing.medium}`,
+    height: `${p.theme.sizing.pickerHeight}px`,
+    width: `${p.theme.sizing.pickerWidth}px`,
+  },
+}))<IColorRect>`
   position: relative;
-  width: 300px;
-  height: 150px;
-  margin-bottom: ${p => p.theme.sizing.medium};
-  background: ${p => p.bg};
   border-radius: 4px;
   box-shadow: inset 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
-
-  &:before {
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    z-index: 1;
-
-    background: rgba(0, 0, 0, 0)
-      linear-gradient(to right, rgb(255, 255, 255), rgba(255, 255, 255, 0)) repeat scroll 0% 0%;
-  }
-
-  &:after {
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    z-index: 1;
-
-    background: rgba(0, 0, 0, 0) linear-gradient(to top, rgb(0, 0, 0), rgba(0, 0, 0, 0)) repeat
-      scroll 0% 0%;
-  }
 `;
 
 const Bar = styled.div`
@@ -80,10 +60,6 @@ type ISliderProps = {
   saturation?: number;
   lightness?: number;
 };
-
-const Hue = styled(Bar)``;
-const Saturation = styled(Bar)``;
-const Lightness = styled(Bar)``;
 
 const HueSlider = styled(Slider)`
   background-image: linear-gradient(
@@ -134,7 +110,7 @@ const CopyButtons = styled.ul`
   list-style: none;
 `;
 
-const ColorButton = styled.button<{ onClick: any }>``;
+const ColorButton = styled.button<{ onClick: Function }>``;
 
 const HiddenText = styled.textarea`
   position: absolute;
@@ -171,17 +147,14 @@ export const Picker = () => {
   const color = hslStringToArray(baseColor);
 
   const handleChange = (val: number, channel: number) => {
-    const colorArray = color;
-    let value = Number.isNaN(val) ? 0 : val;
-    value = value < 0 ? 0 : value;
-    if (channel === 0) {
-      value = value > 359 ? 359 : value;
-    } else {
-      value = value > 100 ? 100 : value;
-    }
+    const [H, S, L] = color;
+    let newColor: number[] = [];
 
-    colorArray[channel] = value;
-    const hsl = hslArrayToString(colorArray);
+    if (channel === 0) newColor = [clamp(H, 0, 359), S, L];
+    if (channel === 1) newColor = [H, clamp(S, 0, 100), L];
+    if (channel === 2) newColor = [H, S, clamp(L, 0, 100)];
+
+    const hsl = hslArrayToString(newColor);
     dispatch(updateStateIfDiff(hsl));
   };
 
@@ -198,7 +171,7 @@ export const Picker = () => {
   return (
     <Container>
       <ColorRect bg={hslArrayToString(color)} />
-      <Hue>
+      <Bar>
         <HueSlider
           styles={sliderStyles}
           xmax={359}
@@ -211,8 +184,8 @@ export const Picker = () => {
           value={color[0]}
           onChange={e => handleChange(parseInt(e.target.value, 10), 0)}
         />
-      </Hue>
-      <Saturation>
+      </Bar>
+      <Bar>
         <SaturationSlider
           styles={sliderStyles}
           axis="x"
@@ -227,8 +200,8 @@ export const Picker = () => {
           value={color[1]}
           onChange={e => handleChange(parseInt(e.target.value, 10), 1)}
         />
-      </Saturation>
-      <Lightness>
+      </Bar>
+      <Bar>
         <LightnessSlider
           styles={sliderStyles}
           x={color[2]}
@@ -242,7 +215,7 @@ export const Picker = () => {
           value={color[2]}
           onChange={e => handleChange(parseInt(e.target.value, 10), 2)}
         />
-      </Lightness>
+      </Bar>
       <CopyButtons>
         <HiddenText className="copyHex" readOnly value={copyHex.join('\n').toString()} />
         <HexButton onClick={() => copy('.copyHex')}>Hex</HexButton>
