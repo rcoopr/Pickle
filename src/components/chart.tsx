@@ -53,8 +53,8 @@ export const Chart = ({ data, xAxis, yAxis, width, height }: IChartProps) => {
       <Grid width={width} height={height} />
       <SVGCanvas width={width} height={height}>
         {data.map((color, i) => {
-          const [h, s, l] = color;
-          const fill = `hsl(${h}, ${s}%, ${l}%)`;
+          const [H, S, L] = color;
+          const fill = `hsl(${H}, ${S}%, ${L}%)`;
           const maxVal = (channel: number) => (channel === 0 ? 360 : 100);
 
           const unscaledX = (width * color[xAxis.channel]) / maxVal(xAxis.channel);
