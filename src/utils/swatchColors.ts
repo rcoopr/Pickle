@@ -8,8 +8,10 @@ import { hslStringToArray } from 'utils/hslConvert';
  * @param {number} max
  * @returns {number}
  */
-export const clamp = (value: number, min: number, max: number): number =>
-  Math.min(Math.max(value, min), max);
+export const clamp = (value: number, min: number, max: number): number => {
+  const clamped = Math.min(Math.max(value, min), max);
+  return Math.round(clamped * 100) / 100;
+};
 
 /**
  * Return values spread evenly (without using endpoints) from min to max
