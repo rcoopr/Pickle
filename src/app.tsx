@@ -23,7 +23,6 @@ const PickerPane = styled.section`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding-bottom: ${p => p.theme.sizing.palette}px;
 `;
 
 const Footer = styled.footer`
