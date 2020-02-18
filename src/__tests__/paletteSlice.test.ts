@@ -4,7 +4,6 @@ import reducer, {
   setSaturationDelta,
   setHueDelta,
   setSwatches,
-  updateStateIfDiff,
   selectBaseColor,
   selectSaturationDelta,
   selectHueDelta,
@@ -64,13 +63,6 @@ describe('palette slice', () => {
       const nextState = reducer(initialState, setHueDelta(data));
       expect(selectSaturationDelta(nextState)).toBe(initialState.saturationDelta);
     });
-
-    it.skip('should update swatches when baseColor changes', () => {
-      const data = 'hsl(1, 63%, 62%)';
-      const nextState = reducer(initialState, updateStateIfDiff(data));
-      const nextSwatches = selectSwatches(nextState);
-      expect(nextSwatches[4]).toBe('hsl(1, 63%, 62%)');
-    });
   });
 });
 
@@ -86,17 +78,15 @@ describe('custom swatch middleware', () => {
     swatchMiddleware(mockStore())(mockNext)(action);
 
     expect(nextArgs[0]).toStrictEqual([action]);
-    expect(nextArgs.length).toBe(1);
   });
 
-  it.skip("should catch actions of where type contains 'palette'", () => {
-    const nextArgs: any[] = [];
-    const mockNext = (...args: any): any => nextArgs.push(args);
+  it.skip("should act on actions where type contains 'palette'", () => {
+    const action = { type: 'paletteTEST' };
+    const store = mockStore({ initialState });
+    store.dispatch(action);
+    expect(store.dispatch.mock.calls).toContain('');
+    // swatchMiddleware(mockStore())(next)(action);
 
-    const action = { type: 'palette/TEST' };
-
-    swatchMiddleware(mockStore({ initialState }))(mockNext)(action);
-    expect(nextArgs[0]).toStrictEqual([action]);
-    expect(nextArgs.length).toBe(1);
+    // expect(mockStore.dispatch.mock.calls).toContain({ type: 'palette/TEST' });
   });
 });

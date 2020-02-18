@@ -1,4 +1,4 @@
-import { createSlice, Action, PayloadAction, ThunkAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { deriveSwatches } from 'utils/swatchColors';
 
 export const initialState = {
@@ -28,26 +28,6 @@ const paletteSlice = createSlice({
 });
 
 export const { setSwatches, setBaseColor, setSaturationDelta, setHueDelta } = paletteSlice.actions;
-
-export const updateStateIfDiff = (
-  color?: string,
-  sDelta?: number,
-  hDelta?: number,
-): ThunkAction<void, RootState, null, Action<string>> => (dispatch, getState) => {
-  const { baseColor, saturationDelta, hueDelta } = getState();
-
-  if (color && color !== baseColor) {
-    dispatch(setBaseColor(color));
-  }
-
-  if (sDelta && sDelta !== saturationDelta) {
-    dispatch(setSaturationDelta(sDelta));
-  }
-
-  if (hDelta && hDelta !== hueDelta) {
-    dispatch(setHueDelta(hDelta));
-  }
-};
 
 export const selectBaseColor = (state: RootState) => state.baseColor;
 export const selectSaturationDelta = (state: RootState) => state.saturationDelta;
