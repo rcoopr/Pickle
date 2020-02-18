@@ -2,15 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import Slider from 'react-input-slider';
 
-import {
-  hslStringToArray,
-  hslArrayToString,
-  swatchesHex,
-  swatchesHSL,
-  swatchesRGB,
-  formatStringsToCopy,
-} from 'utils/hslConvert';
+import { hslStringToArray, hslArrayToString } from 'utils/hslConvert';
 import { clamp } from 'utils/swatchColors';
+import { CopyGroup } from 'components/copyGroup';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { selectBaseColor, selectSwatches, setBaseColor } from 'redux/paletteSlice';
@@ -97,7 +91,7 @@ const EditableInput = styled.input`
   margin-left: 25px;
   text-align: center;
   border-radius: 2px;
-  border: 1px solid grey;
+  border: 1px solid ${p => p.theme.colors.primary};
   font: inherit;
   font-size: 0.8rem;
 `;
@@ -105,22 +99,6 @@ const EditableInput = styled.input`
 const HueEditableInput = styled(EditableInput)``;
 const SaturationEditableInput = styled(EditableInput)``;
 const LightnessEditableInput = styled(EditableInput)``;
-
-const CopyButtons = styled.ul`
-  list-style: none;
-`;
-
-const ColorButton = styled.button<{ onClick: Function }>``;
-
-const HiddenText = styled.textarea`
-  position: absolute;
-  top: -999em;
-  left: -999em;
-`;
-
-const HexButton = styled(ColorButton)``;
-const HSLButton = styled(ColorButton)``;
-const RGBButton = styled(ColorButton)``;
 
 const sliderStyles = {
   track: {
@@ -158,16 +136,6 @@ export const Picker = () => {
       const hsl = hslArrayToString(newColor);
       dispatch(setBaseColor(hsl));
     }
-  };
-
-  const copyHex = formatStringsToCopy(swatchesHex(swatches));
-  const copyHSL = formatStringsToCopy(swatchesHSL(swatches));
-  const copyRGB = formatStringsToCopy(swatchesRGB(swatches));
-
-  const copy = (selector: string) => {
-    const copyText = document.querySelector(selector) as HTMLTextAreaElement;
-    copyText.select();
-    document.execCommand('copy');
   };
 
   return (
@@ -218,14 +186,7 @@ export const Picker = () => {
           onChange={e => handleChange(parseInt(e.target.value, 10), 2)}
         />
       </Bar>
-      <CopyButtons>
-        <HiddenText className="copyHex" readOnly value={copyHex.join('\n').toString()} />
-        <HexButton onClick={() => copy('.copyHex')}>Hex</HexButton>
-        <HiddenText className="copyHSL" readOnly value={copyHSL.join('\n').toString()} />
-        <HSLButton onClick={() => copy('.copyHSL')}>HSL</HSLButton>
-        <HiddenText className="copyRGB" readOnly value={copyRGB.join('\n').toString()} />
-        <RGBButton onClick={() => copy('.copyRGB')}>RGB</RGBButton>
-      </CopyButtons>
+      <CopyGroup swatches={swatches} />
     </Container>
   );
 };
