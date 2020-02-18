@@ -5,6 +5,10 @@ import { hslArrayToString } from 'utils/hslConvert';
 import { useSelector } from 'react-redux';
 import { selectSwatches } from 'redux/paletteSlice';
 
+interface Swatch {
+  bg: string;
+}
+
 const Container = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -18,26 +22,55 @@ const Container = styled.div`
     0 5.3px 13.5px rgba(0, 0, 0, 0.033), 0 23px 54px rgba(0, 0, 0, 0.05);
 `;
 
-const Swatch = styled.div.attrs<{ bg: string }>(p => ({
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 6%;
+  height: 80%;
+`;
+
+const Swatch = styled.div.attrs<Swatch>(p => ({
   style: {
     background: `${p.bg}`,
   },
-}))<{ bg: string }>`
-  width: 50px;
-  height: 50px;
+}))<Swatch>`
+  width: 100%;
+  height: 0px;
+  padding-bottom: 100%;
   border-radius: 4px;
   box-shadow: inset 0px 1px 2px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
 `;
 
+const ToneValue = styled.div`
+  font-size: ${p => p.theme.fonts.small};
+  font-weight: 700;
+  padding-top: ${p => p.theme.sizing.small};
+`;
+
+const ColorCode = styled.div`
+  font-size: ${p => p.theme.fonts.smallest};
+  text-align: center;
+`;
+
 export const Palette = () => {
   const swatches = useSelector(selectSwatches);
-  const swatchesHSLString = swatches.map(swatch => hslArrayToString(swatch));
 
   return (
     <Container>
-      {swatchesHSLString.map((color, i) => {
-        return <Swatch bg={color} key={i} />;
+      {swatches.map(([H, S, L], i) => {
+        const [hue, sat, light] = [H, S, L].map(each => Math.round(each));
+        const colorString = hslArrayToString([H, S, L]);
+
+        return (
+          <Wrapper key={colorString}>
+            <Swatch bg={colorString} />
+            <ToneValue>{(i + 1) * 100}</ToneValue>
+            <ColorCode>{`[${hue} ${sat} ${light}]`}</ColorCode>
+          </Wrapper>
+        );
       })}
     </Container>
   );
