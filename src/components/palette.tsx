@@ -9,11 +9,11 @@ interface Swatch {
   bg: string;
 }
 
-const Container = styled.div`
+const Container = styled.ul`
+  list-style: none;
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-evenly;
+  flex-direction: column;
+  justify-content: center;
   padding: 0 10vw;
   height: ${p => p.theme.sizing.palette}px;
   box-shadow: 0 -0.9px 2.2px rgba(0, 0, 0, 0.017), 0 -2.3px 5.7px rgba(0, 0, 0, 0.025),
@@ -22,13 +22,14 @@ const Container = styled.div`
     0 5.3px 13.5px rgba(0, 0, 0, 0.033), 0 23px 54px rgba(0, 0, 0, 0.05);
 `;
 
-const Wrapper = styled.div`
+const PaletteRow = styled.li`
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  width: 100%;
+  justify-content: space-evenly;
+`;
+
+const SwatchWrapper = styled.div`
   width: 6%;
-  height: 80%;
 `;
 
 const Swatch = styled.div.attrs<Swatch>(p => ({
@@ -39,7 +40,7 @@ const Swatch = styled.div.attrs<Swatch>(p => ({
   width: 100%;
   height: 0px;
   padding-bottom: 100%;
-  border-radius: 4px;
+  border-radius: 99em;
   box-shadow: inset 0px 1px 2px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
 `;
@@ -48,11 +49,14 @@ const ToneValue = styled.div`
   font-size: ${p => p.theme.fonts.small};
   font-weight: 700;
   padding-top: ${p => p.theme.sizing.small};
+  width: 6%;
+  text-align: center;
 `;
 
 const ColorCode = styled.div`
   font-size: ${p => p.theme.fonts.smallest};
   text-align: center;
+  width: 6%;
 `;
 
 export const Palette = () => {
@@ -60,18 +64,27 @@ export const Palette = () => {
 
   return (
     <Container>
-      {swatches.map(([H, S, L], i) => {
-        const [hue, sat, light] = [H, S, L].map(each => Math.round(each));
-        const colorString = hslArrayToString([H, S, L]);
-
-        return (
-          <Wrapper key={colorString}>
-            <Swatch bg={colorString} />
-            <ToneValue>{(i + 1) * 100}</ToneValue>
-            <ColorCode>{`[${hue} ${sat} ${light}]`}</ColorCode>
-          </Wrapper>
-        );
-      })}
+      <PaletteRow>
+        {swatches.map(([H, S, L]) => {
+          const colorString = hslArrayToString([H, S, L]);
+          return (
+            <SwatchWrapper>
+              <Swatch bg={colorString} />
+            </SwatchWrapper>
+          );
+        })}
+      </PaletteRow>
+      <PaletteRow>
+        {swatches.map((_, i) => (
+          <ToneValue>{(i + 1) * 100}</ToneValue>
+        ))}
+      </PaletteRow>
+      <PaletteRow>
+        {swatches.map(([H, S, L]) => {
+          const [hue, sat, light] = [H, S, L].map(each => Math.round(each));
+          return <ColorCode>{`[${hue} ${sat} ${light}]`}</ColorCode>;
+        })}
+      </PaletteRow>
     </Container>
   );
 };
