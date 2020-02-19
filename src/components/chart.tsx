@@ -41,12 +41,6 @@ interface IGrid {
   height: number;
 }
 
-interface IChartArea {
-  data: number[][];
-  width: number;
-  height: number;
-}
-
 export const Chart = ({ data, xAxis, yAxis, width, height }: IChartProps) => {
   return (
     <Canvas width={width} height={height}>
