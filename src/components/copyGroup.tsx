@@ -1,5 +1,6 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import styled from 'styled-components';
+import useClipboard from 'react-use-clipboard';
 
 import { swatchesHex, swatchesHSL, swatchesRGB, formatStringsToCopy } from 'utils/hslConvert';
 
@@ -11,40 +12,33 @@ const Container = styled.ul`
   align-items: center;
 `;
 
-const Wrapper = styled.li`
-  width: 60%;
-`;
-
 const Button = styled.button`
   -webkit-appearance: none;
-  background: none;
+  background-color: white;
   border: 1px solid ${p => p.theme.colors.primary};
   border-radius: 4px;
   outline: none;
-  width: 100%;
+  width: 60%;
   height: ${p => p.theme.sizing.large};
   color: ${p => p.theme.colors.primary};
   font-weight: 700;
-  opacity: 0.8;
   margin-top: ${p => p.theme.sizing.small};
-  transition: 200ms all;
+  transition: color 400ms 1000ms ease, background-color 400ms 1000ms ease, transform 200ms;
 
   &:hover {
+    background-color: white;
+    color: ${p => p.theme.colors.primary};
+    border-color: ${p => p.theme.colors.accent};
     opacity: 1;
     transform: scale(1.05);
+    transition: 200ms transform, color 400ms 1000ms, 400ms 1000ms background-color;
   }
 
   &:active {
     color: white;
-    background: ${p => p.theme.colors.primary};
+    background-color: ${p => p.theme.colors.primary};
     transition: 40ms all;
   }
-`;
-
-const HiddenText = styled.textarea`
-  position: absolute;
-  top: -999em;
-  left: -999em;
 `;
 
 interface CopyButton {
@@ -57,22 +51,9 @@ interface CopyGroup {
 }
 
 const CopyButton = ({ string, format }: CopyButton) => {
-  const TextAreaRef = useRef<HTMLTextAreaElement>(null);
+  const [isCopied, setCopied] = useClipboard(string, { successDuration: 1000 });
 
-  const copy = (ref: React.RefObject<HTMLTextAreaElement>) => {
-    if (ref.current !== null) {
-      const copyText = ref.current;
-      copyText.select();
-      document.execCommand('copy');
-    }
-  };
-
-  return (
-    <Wrapper>
-      <HiddenText readOnly value={string} ref={TextAreaRef} />
-      <Button onClick={() => copy(TextAreaRef)}>{`Copy ${format} values`}</Button>
-    </Wrapper>
-  );
+  return <Button onClick={setCopied}>{isCopied ? 'Copied!' : `Copy ${format} values`}</Button>;
 };
 
 export const CopyGroup = ({ swatches }: CopyGroup) => {
