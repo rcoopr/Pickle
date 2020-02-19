@@ -17,7 +17,7 @@ const Description = styled.h2`
 
 export const Header = () => (
   <Container>
-    <Title>Color Picker</Title>
-    <Description>Simple control over your color palette</Description>
+    <Title>Pickle</Title>
+    <Description>Fine tuned control over your color palette</Description>
   </Container>
 );
