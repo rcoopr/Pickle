@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import Color from 'color';
+
 import { hslArrayToString } from 'utils/hslConvert';
 import { useSelector } from 'react-redux';
 import { selectSwatches } from 'redux/paletteSlice';
@@ -29,7 +31,7 @@ const PaletteRow = styled.li`
 `;
 
 const SwatchWrapper = styled.div`
-  width: 6%;
+  width: 7%;
 `;
 
 const Swatch = styled.div.attrs<Swatch>(p => ({
@@ -49,14 +51,14 @@ const ToneValue = styled.div`
   font-size: ${p => p.theme.fonts.small};
   font-weight: 700;
   padding-top: ${p => p.theme.sizing.small};
-  width: 6%;
+  width: 7%;
   text-align: center;
 `;
 
 const ColorCode = styled.div`
   font-size: ${p => p.theme.fonts.smallest};
   text-align: center;
-  width: 6%;
+  width: 7%;
 `;
 
 export const Palette = () => {
@@ -65,24 +67,24 @@ export const Palette = () => {
   return (
     <Container>
       <PaletteRow>
-        {swatches.map(([H, S, L]) => {
+        {swatches.map(([H, S, L], i) => {
           const colorString = hslArrayToString([H, S, L]);
           return (
-            <SwatchWrapper>
-              <Swatch bg={colorString} />
+            <SwatchWrapper key={i}>
+              <Swatch bg={colorString} onClick={} />
             </SwatchWrapper>
           );
         })}
       </PaletteRow>
       <PaletteRow>
         {swatches.map((_, i) => (
-          <ToneValue>{(i + 1) * 100}</ToneValue>
+          <ToneValue key={i}>{(i + 1) * 100}</ToneValue>
         ))}
       </PaletteRow>
       <PaletteRow>
-        {swatches.map(([H, S, L]) => {
-          const [hue, sat, light] = [H, S, L].map(each => Math.round(each));
-          return <ColorCode>{`[${hue} ${sat} ${light}]`}</ColorCode>;
+        {swatches.map(([H, S, L], i) => {
+          const hex = Color.hsl(H, S, L).hex();
+          return <ColorCode key={i}>{hex}</ColorCode>;
         })}
       </PaletteRow>
     </Container>
