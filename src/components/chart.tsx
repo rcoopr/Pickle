@@ -1,12 +1,11 @@
-/* eslint-disable react/no-array-index-key */
 import React from 'react';
 import styled from 'styled-components';
 
 import { IChartProps } from 'components/graph';
 
-const Canvas = styled.div`
-  width: 300px;
-  height: 200px;
+const Canvas = styled.div<{ width: number; height: number }>`
+  width: ${p => p.width}px;
+  height: ${p => p.height}px;
   position: relative;
   border-left: 2px solid ${p => p.theme.colors.primary};
   border-bottom: 2px solid ${p => p.theme.colors.primary};
@@ -42,20 +41,14 @@ interface IGrid {
   height: number;
 }
 
-interface IChartArea {
-  data: number[][];
-  width: number;
-  height: number;
-}
-
 export const Chart = ({ data, xAxis, yAxis, width, height }: IChartProps) => {
   return (
-    <Canvas>
+    <Canvas width={width} height={height}>
       <Grid width={width} height={height} />
       <SVGCanvas width={width} height={height}>
         {data.map((color, i) => {
-          const [h, s, l] = color;
-          const fill = `hsl(${h}, ${s}%, ${l}%)`;
+          const [H, S, L] = color;
+          const fill = `hsl(${H}, ${S}%, ${L}%)`;
           const maxVal = (channel: number) => (channel === 0 ? 360 : 100);
 
           const unscaledX = (width * color[xAxis.channel]) / maxVal(xAxis.channel);

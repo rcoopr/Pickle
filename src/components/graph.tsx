@@ -53,18 +53,11 @@ const LabelX = styled.span`
   text-transform: uppercase;
 `;
 
-const Intersection = styled.div`
-  grid-area: 2 / 1 / 3 / 2;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
 export interface IChartProps {
   data: number[][];
   xAxis: {
     name: string;
-    channel: number; // 0 | 1 | 2
+    channel: number;
   };
   yAxis: {
     name: string;
@@ -89,7 +82,6 @@ export const Graph = ({ data, xAxis, yAxis, width, height, children }: IGraphPro
       <XAxis>
         <LabelX>{xAxis.name}</LabelX>
       </XAxis>
-      <Intersection>0</Intersection>
     </ChartContainer>
   </Wrapper>
 );

@@ -1,6 +1,8 @@
 import { createGlobalStyle } from 'styled-components';
 
 export default createGlobalStyle`
+  @import url('https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap');
+
   *, *:before, *:after {
     box-sizing: border-box;
     -webkit-font-smoothing: antialiased;
@@ -10,7 +12,7 @@ export default createGlobalStyle`
   }
 
   body {
-    font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     font-size: ${props => props.theme.sizing.medium};
     background: ${props => props.theme.colors.secondary};
     color: ${props => props.theme.colors.primary};
