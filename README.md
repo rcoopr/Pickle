@@ -1,1 +1,1 @@
-https://pickle-git-develop.rossc.now.sh/
+https://pickle.rossc.now.sh
