@@ -3,7 +3,12 @@ import styled from 'styled-components';
 
 import { IChartProps } from 'components/graph';
 
-const Canvas = styled.div<{ width: number; height: number }>`
+interface Canvas {
+  width: number;
+  height: number;
+}
+
+const Canvas = styled.div<Canvas>`
   width: ${p => p.width}px;
   height: ${p => p.height}px;
   position: relative;
