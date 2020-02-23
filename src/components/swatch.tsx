@@ -44,6 +44,7 @@ const ClipboardIcon = styled(Octicon)<ClipboardIcon>`
   width: 50%;
   height: 50%;
   margin-left: 5.2%;
+  margin-bottom: 4%;
   opacity: ${p => (p.isShown ? 1 : 0)};
   color: ${p => (p.isLightBackground ? 'black' : 'white')};
   transition: 200ms opacity;
