@@ -33,6 +33,7 @@ const StyledButton = styled(Button)`
   align-items: center;
   justify-content: center;
   transition: 200ms transform;
+  cursor: pointer;
 
   &:hover {
     transform: scale(1.15);
@@ -108,7 +109,12 @@ export const Swatch = ({ hex, index }: Swatch) => {
     <SwatchWrapper>
       <ButtonWrapper>
         <StyledButton hex={hex} onClick={setCopied}>
-          <ClipboardIcon icon={Clippy} isShown={isCopied} isLightBackground={isLightBackground} />
+          <ClipboardIcon
+            icon={Clippy}
+            ariaLabel="Copied to clipboard"
+            isShown={isCopied}
+            isLightBackground={isLightBackground}
+          />
         </StyledButton>
       </ButtonWrapper>
       <ToneValue isFaded={isCopied}>{(index + 1) * 100}</ToneValue>
