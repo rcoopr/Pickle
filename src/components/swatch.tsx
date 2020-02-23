@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import Color from 'color';
 import useClipboard from 'react-use-clipboard';
+import Octicon, { Clippy } from '@primer/octicons-react';
 
 const SwatchWrapper = styled.div`
   width: 7%;
@@ -39,10 +40,13 @@ const StyledButton = styled(Button)`
   }
 `;
 
-const ButtonText = styled.span<ButtonText>`
-  opacity: ${p => (p.isShown ? 1 : 0)};
-  color: ${p => (p.textColor ? 'black' : 'white')};
-  transition: 200ms transform;
+const ClipboardIcon = styled(Octicon)<ClipboardIcon>`
+  width: 50%;
+  height: 50%;
+  margin-left: 5.2%;
+  opacity: ${p => (p.isShown ? 1 : 1)};
+  color: ${p => (p.isLightBackground ? 'black' : 'white')};
+  transition: 200ms opacity;
 `;
 
 const ButtonWrapper = styled.div`
@@ -81,9 +85,9 @@ interface ColorCode {
   isExpanded: boolean;
 }
 
-interface ButtonText {
+interface ClipboardIcon {
   isShown: boolean;
-  textColor: boolean;
+  isLightBackground: boolean;
 }
 
 interface Button {
@@ -98,15 +102,13 @@ interface Swatch {
 
 export const Swatch = ({ hex, index }: Swatch) => {
   const [isCopied, setCopied] = useClipboard(hex, { successDuration: 600 });
-  const isBackgroundLight = Color(hex).isLight();
+  const isLightBackground = Color(hex).isLight();
 
   return (
     <SwatchWrapper>
       <ButtonWrapper>
         <StyledButton hex={hex} onClick={setCopied}>
-          <ButtonText isShown={isCopied} textColor={isBackgroundLight}>
-            Copied!
-          </ButtonText>
+          <ClipboardIcon icon={Clippy} isShown={isCopied} isLightBackground={isLightBackground} />
         </StyledButton>
       </ButtonWrapper>
       <ToneValue isFaded={isCopied}>{(index + 1) * 100}</ToneValue>
