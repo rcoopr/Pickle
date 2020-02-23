@@ -7,7 +7,8 @@ import Octicon, { Clippy } from '@primer/octicons-react';
 
 const SwatchWrapper = styled.div`
   width: 7%;
-  max-width: 65px;
+  max-width: 4.2rem;
+  min-width: 3.125rem;
 `;
 
 const Button = styled.button.attrs<Button>(p => ({
@@ -22,8 +23,6 @@ const StyledButton = styled(Button)`
   height: 100%;
   top: 0;
   left: 0;
-  right: 0;
-  bottom: 0;
   border-radius: 99em;
   box-shadow: inset 0px 1px 2px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
