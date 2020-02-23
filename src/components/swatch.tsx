@@ -32,7 +32,7 @@ const StyledButton = styled(Button)`
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: 200ms all;
+  transition: 200ms transform;
 
   &:hover {
     transform: scale(1.15);
@@ -42,7 +42,7 @@ const StyledButton = styled(Button)`
 const ButtonText = styled.span<ButtonText>`
   opacity: ${p => (p.isShown ? 1 : 0)};
   color: ${p => (p.textColor ? 'black' : 'white')};
-  transition: 200ms all;
+  transition: 200ms transform;
 `;
 
 const ButtonWrapper = styled.div`
@@ -59,13 +59,13 @@ const ToneValue = styled.div<ToneValue>`
   transform: ${p => p.isFaded && 'translateY(1em)'};
   font-size: ${p => p.theme.fonts.small};
   padding-top: ${p => p.theme.sizing.small};
-  transition: 200ms all;
+  transition: 200ms transform;
 `;
 
 const ColorCode = styled.div<ColorCode>`
   text-align: center;
   border-radius: 1vw;
-  transition: 200ms all;
+  transition: 200ms transform;
 
   transform-origin: center bottom;
   background: ${p => p.theme.colors.secondary};
