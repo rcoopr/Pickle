@@ -96,10 +96,6 @@ const EditableInput = styled.input`
   font-size: 0.8rem;
 `;
 
-const HueEditableInput = styled(EditableInput)``;
-const SaturationEditableInput = styled(EditableInput)``;
-const LightnessEditableInput = styled(EditableInput)``;
-
 const sliderStyles = {
   track: {
     width: '100%',
@@ -149,7 +145,7 @@ export const Picker = () => {
           xstep={1}
           onChange={({ x }) => handleChange(x, 0)}
         />
-        <HueEditableInput
+        <EditableInput
           type="text"
           value={color[0]}
           onChange={e => handleChange(parseInt(e.target.value, 10), 0)}
@@ -165,7 +161,7 @@ export const Picker = () => {
           hue={color[0]}
           lightness={color[2]}
         />
-        <SaturationEditableInput
+        <EditableInput
           type="text"
           value={color[1]}
           onChange={e => handleChange(parseInt(e.target.value, 10), 1)}
@@ -180,7 +176,7 @@ export const Picker = () => {
           hue={color[0]}
           saturation={color[1]}
         />
-        <LightnessEditableInput
+        <EditableInput
           type="text"
           value={color[2]}
           onChange={e => handleChange(parseInt(e.target.value, 10), 2)}
