@@ -66,6 +66,7 @@ export const deriveSwatches = (baseColor: string, saturationDelta: number, hueDe
   const baseLightnessFraction = baseColorHSL[2] / 100;
   // The smaller of the 2 distances from [minLightness, baselightnessFraction] and [baselightnessFraction, maxLightness]
   const [minLightness, maxLightness] = [0.1, 0.95];
+  const [minSaturation, maxSaturation] = [0, 100];
   const lightnessSpace = Math.min(
     baseLightnessFraction - minLightness,
     maxLightness - baseLightnessFraction,
@@ -94,7 +95,7 @@ export const deriveSwatches = (baseColor: string, saturationDelta: number, hueDe
 
   // return [vals] between [0, 100] for generated saturation
   const saturation = lightness.map(val =>
-    clamp(partialHalfSine(val), minLightness * 100, maxLightness * 100),
+    clamp(partialHalfSine(val), minSaturation, maxSaturation),
   );
 
   const swatches = lightness.map((lightValue, i) => [
