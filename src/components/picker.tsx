@@ -120,7 +120,8 @@ export const Picker = () => {
 
   const color = hslStringToArray(baseColor);
 
-  const handleChange = (val: number, channel: number) => {
+  const handleChange = (userInput: number, channel: number) => {
+    const val = Number.isNaN(userInput) ? 0 : userInput;
     const [H, S, L] = color;
     let newColor: number[] = [];
 
