@@ -15,6 +15,7 @@ import Slider from 'react-input-slider';
 const Container = styled.section`
   display: flex;
   flex-direction: column;
+  flex: 1;
 `;
 
 const SliderContainer = styled.div`

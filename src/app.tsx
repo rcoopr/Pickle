@@ -13,8 +13,22 @@ import { Picker } from 'components/picker';
 
 const Container = styled.main`
   display: flex;
+  flex-direction: column;
   background: ${p => p.theme.colors.secondary};
   padding-bottom: ${p => `${p.theme.sizing.palette + p.theme.sizing.watermark}px`};
+  align-items: center;
+
+  & > section {
+    padding-bottom: 5em;
+  }
+
+  @media (min-width: 820px) {
+    flex-direction: row;
+
+    & > section {
+      padding-bottom: none;
+    }
+  }
 `;
 
 const PickerPane = styled.section`

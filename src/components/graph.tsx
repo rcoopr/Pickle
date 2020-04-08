@@ -9,6 +9,7 @@ const Wrapper = styled.div`
   grid-template-rows: 1fr 30px;
   grid-column-gap: 10px;
   grid-row-gap: 0px;
+  width: 400px;
 `;
 
 const ChartContainer = styled.div`
