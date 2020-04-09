@@ -8,7 +8,11 @@ import Octicon, { Clippy } from '@primer/octicons-react';
 const SwatchWrapper = styled.div`
   width: 7%;
   max-width: 4.2rem;
-  min-width: 3.125rem;
+  min-width: 2.125rem;
+
+  @media (min-width: 525px) {
+    min-width: 3.125rem;
+  }
 `;
 
 const Button = styled.button.attrs<Button>(p => ({
@@ -71,6 +75,11 @@ const ColorCode = styled.div<ColorCode>`
   text-align: center;
   border-radius: 1vw;
   transition: 200ms transform;
+  transform: scale(0.7);
+
+  @media (min-width: 525px) {
+    transform: scale(1);
+  }
 
   transform-origin: center bottom;
   background: ${p => p.theme.colors.secondary};
