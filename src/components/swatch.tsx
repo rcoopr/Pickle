@@ -75,16 +75,15 @@ const ColorCode = styled.div<ColorCode>`
   text-align: center;
   border-radius: 1vw;
   transition: 200ms transform;
-  transform: scale(0.7);
+  font-size: 0.5rem;
 
   @media (min-width: 525px) {
-    transform: scale(1);
+    font-size: ${p => p.theme.fonts.smallest};
   }
 
   transform-origin: center bottom;
-  background: ${p => p.theme.colors.secondary};
   transform: ${p => p.isExpanded && 'scale(2)'};
-  font-size: ${p => p.theme.fonts.smallest};
+  background: ${p => p.theme.colors.secondary};
 `;
 
 interface ToneValue {
